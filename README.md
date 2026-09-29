@@ -3,9 +3,11 @@
 Projeto desenvolvido para um desafio técnico de **Analista de Testes Pleno (QA)**, com foco na validação de uma aplicação Web de cadastro de funcionários e de sua API REST.
 
 Veja abaixo como ele funciona:
-<video width="100%" controls>
-  <source src="resources/files/automacao.mp4" type="video/mp4">
-</video>
+
+
+https://github.com/user-attachments/assets/2e0071f3-037b-4b62-96f1-52b63f78be7d
+
+
 
 ## Tecnologias utilizadas
 
