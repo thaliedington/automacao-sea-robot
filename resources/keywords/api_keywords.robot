@@ -140,3 +140,27 @@ Buscar Registro De Teste No GET
     END
 
     RETURN    ${EMPTY}
+
+#Keywords do CT-021
+Quando Consulto Os Cabecalhos Dos Funcionarios
+    ${response}=    HEAD
+    ...    ${ENDPOINT_FUNCIONARIOS}
+    ...    expected_status=any
+
+    Set Test Variable    ${RESPOSTA_HEAD}    ${response}
+
+
+Entao O Status Da Resposta HEAD Deve Ser 200
+    Status Should Be    200    ${RESPOSTA_HEAD}
+
+
+E A Resposta HEAD Nao Deve Conter Corpo
+    Should Be Empty    ${RESPOSTA_HEAD.content}
+
+
+E O Content Type Da Resposta HEAD Deve Ser JSON
+    ${content_type}=    Get From Dictionary
+    ...    ${RESPOSTA_HEAD.headers}
+    ...    Content-Type
+
+    Should Contain    ${content_type}    application/json

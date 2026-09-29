@@ -27,3 +27,9 @@ CT-020 - Validar Inclusao Alteracao E Exclusao De Funcionario Na API
     Entao O DELETE Deve Retornar Sucesso
     E O GET Nao Deve Retornar O Funcionario Excluido
 
+CT-021 - Validar O Metodo HEAD
+    Dado Que Tenho O Endpoint De Funcionarios
+    Quando Consulto Os Cabecalhos Dos Funcionarios
+    Entao O Status Da Resposta HEAD Deve Ser 200
+    E A Resposta HEAD Nao Deve Conter Corpo
+    E O Content Type Da Resposta HEAD Deve Ser JSON
