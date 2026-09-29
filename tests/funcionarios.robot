@@ -159,3 +159,8 @@ CT-017 - Limpar Filtro De Funcionarios Ativos
     Entao A Selecao Do Filtro "Ver apenas ativos" Deve Ser Removida
     E A Listagem Deve Exibir Todos Os Cadastros
 
+CT-018 - Marcar A Primeira Etapa Como Concluida
+    Dado Que Estou Na Pagina Inicial
+    E A Etapa Esta Pendente
+    Quando Marco A Etapa Como Concluida
+    Entao A Etapa Deve Ser Exibida Como Concluida

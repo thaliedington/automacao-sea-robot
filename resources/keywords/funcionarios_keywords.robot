@@ -417,6 +417,23 @@ Contador Deve Estar Carregado
     ${texto_contador}=    Get Text    ${CONTADOR_ATIVOS}
     Should Match Regexp    ${texto_contador}    Ativos\\s*\\d+\\s*/\\s*\\d+
 
+#Keywords do CT-018
+E A Etapa Esta Pendente
+    ${estado}=    Get Element Attribute    ${SWITCH_ETAPA}    aria-checked
+    Should Be Equal    ${estado}    false
+
+Quando Marco A Etapa Como Concluida
+    Click Element    ${SWITCH_ETAPA}
+
+Entao A Etapa Deve Ser Exibida Como Concluida
+    ${estado}=    Get Element Attribute    ${SWITCH_ETAPA}    aria-checked
+    Should Be Equal    ${estado}    true
+
+    Wait Until Element Is Visible    ${STATUS_PRIMEIRO_ITEM}
+
+    ${texto}=    Get Text    ${STATUS_PRIMEIRO_ITEM}
+    Should Be Equal    ${texto}    CONCLUIDO
+
 #Registrar evidências no relatório
 Registrar Evidencia Final
     ${nome_teste}=    Replace String    ${TEST NAME}    ${SPACE}    _
