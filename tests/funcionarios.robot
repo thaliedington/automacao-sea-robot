@@ -145,3 +145,17 @@ CT-015 - Anexar Atestado de Saude Ocupacional Valido
     E Clico Em "Salvar"
     Entao O Cadastro Deve Ser Realizado Com Sucesso
 
+CT-016 - Filtrar Funcionarios Ativos
+    Dado Que Estou Na Pagina Inicial
+    E Existem Funcionarios Ativos E Inativos Cadastrados
+    Quando Clico Em "Ver apenas ativos"
+    Entao Devem Ser Exibidos Somente Funcionarios Com Status Ativo
+    E Funcionarios Inativos Nao Devem Ser Exibidos
+
+CT-017 - Limpar Filtro De Funcionarios Ativos
+    Dado Que Estou Na Pagina Inicial
+    E O Filtro "Ver Apenas Ativos" Esta Selecionado
+    Quando Clico Em "Limpar filtros"
+    Entao A Selecao Do Filtro "Ver apenas ativos" Deve Ser Removida
+    E A Listagem Deve Exibir Todos Os Cadastros
+

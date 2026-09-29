@@ -347,6 +347,57 @@ Quando Anexo Um Arquivo Valido No Campo ASO
 E O Nome Do Arquivo Deve Ser Exibido
     Page Should Contain    girl-icon2.jpg
 
+#Keywords do CT-016
+E Existem Funcionarios Ativos E Inativos Cadastrados
+    ${total_ativos}    ${total_cadastros}=    Obter Quantidades Do Contador
+
+    ${total_inativos}=    Evaluate    ${total_cadastros} - ${total_ativos}
+
+    Set Test Variable    ${TOTAL_ATIVOS}       ${total_ativos}
+    Set Test Variable    ${TOTAL_INATIVOS}     ${total_inativos}
+    Set Test Variable    ${TOTAL_CADASTROS}    ${total_cadastros}
+
+Entao Devem Ser Exibidos Somente Funcionarios Com Status Ativo
+    ${total_cards_exibidos}=    Get Element Count    ${CARDS_FUNCIONARIOS}
+
+    Should Be Equal As Integers    ${total_cards_exibidos}    ${TOTAL_ATIVOS}
+    ...    Ocorreu um erro: Foram exibidos ${total_cards_exibidos} funcionários, mas o total de funcionários ativos é ${TOTAL_ATIVOS}.
+
+E Funcionarios Inativos Nao Devem Ser Exibidos
+    ${total_cards_exibidos}=    Get Element Count    ${CARDS_FUNCIONARIOS}
+
+    ${total_inativos_ocultos}=    Evaluate    ${TOTAL_CADASTROS} - ${total_cards_exibidos}
+
+    Should Be Equal As Integers    ${total_inativos_ocultos}    ${TOTAL_INATIVOS}
+    ...    Ocorreu um erro: Foram ocultados ${total_inativos_ocultos} funcionários inativos, mas o total esperado era ${TOTAL_INATIVOS}.
+
+#Keywords do CT-017
+E O Filtro "${filtro}" Esta Selecionado
+    ${total_ativos}    ${total_cadastros}=    Obter Quantidades Do Contador
+
+    Set Test Variable    ${TOTAL_ATIVOS}       ${total_ativos}
+    Set Test Variable    ${TOTAL_CADASTROS}    ${total_cadastros}
+
+    Click Element    ${BTN_VER_APENAS_ATIVOS}
+
+    ${classe}=    Get Element Attribute    ${BTN_VER_APENAS_ATIVOS}    class
+
+    Should Contain    ${classe}    isActive
+
+    ${cards_filtrados}=    Get Element Count    ${CARDS_FUNCIONARIOS}
+
+    Should Be Equal As Integers    ${cards_filtrados}    ${TOTAL_ATIVOS}
+
+Entao A Selecao Do Filtro "${filtro}" Deve Ser Removida
+    ${classe}=    Get Element Attribute    ${BTN_VER_APENAS_ATIVOS}    class
+
+    Should Not Contain    ${classe}    isActive
+
+E A Listagem Deve Exibir Todos Os Cadastros
+    ${total_cards}=    Get Element Count    ${CARDS_FUNCIONARIOS}
+
+    Should Be Equal As Integers    ${total_cards}    ${TOTAL_CADASTROS}
+
 Obter Quantidades Do Contador
     Wait Until Keyword Succeeds    5s    500ms    Contador Deve Estar Carregado
 
