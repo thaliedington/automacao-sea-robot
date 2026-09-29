@@ -340,6 +340,13 @@ Entao O Cadastro Deve Ser Realizado Com Sucesso
     Wait Until Element Is Not Visible    ${CAMPO_NOME}
     Wait Until Element Is Visible        ${BTN_VER_APENAS_ATIVOS}
 
+#Keywords do CT-015
+Quando Anexo Um Arquivo Valido No Campo ASO
+    Choose File    ${CAMPO_ARQUIVO}    ${ARQUIVO_ASO}
+
+E O Nome Do Arquivo Deve Ser Exibido
+    Page Should Contain    girl-icon2.jpg
+
 Obter Quantidades Do Contador
     Wait Until Keyword Succeeds    5s    500ms    Contador Deve Estar Carregado
 

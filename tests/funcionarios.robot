@@ -136,3 +136,12 @@ CT-014 - Cadastrar Funcionario Com Dados Validos
     Quando Clico Em "Salvar"
     Entao O Cadastro Deve Ser Realizado Com Sucesso
 
+CT-015 - Anexar Atestado de Saude Ocupacional Valido
+    Dado Que Estou No Formulario De Cadastro De Funcionario
+    E Preencho Apenas Os Campos Obrigatorios Com Dados Validos    ASO Comum
+    E Seleciono O Sexo "feminino"
+    Quando Anexo Um Arquivo Valido No Campo ASO
+    E O Nome Do Arquivo Deve Ser Exibido
+    E Clico Em "Salvar"
+    Entao O Cadastro Deve Ser Realizado Com Sucesso
+
