@@ -163,8 +163,182 @@ Entao O Campo CPF Deve Permitir Apenas 11 Digitos
 
     Capture Page Screenshot    CT-006_-_Informar_CPF_com_12_digitos.png
 
+#Keywords do CT-009
+Quando Seleciono O ${cargo}
+    Wait Until Element Is Visible    ${CAMPO_CARGO}
+    Click Element    ${CAMPO_CARGO}
+
+    Wait Until Element Is Visible    xpath=//div[contains(@class,"ant-select-item-option-content") and normalize-space(.)="${cargo}"]
+    Click Element    xpath=//div[contains(@class,"ant-select-item-option-content") and normalize-space(.)="${cargo}"]
+
+E O ${cargo} Deve Constar no Registro na API
+    ${response}=    GET    ${URL}employees
+    Status Should Be    200    ${response}
+
+    ${registros}=    Set Variable    ${response.json()}
+
+    FOR    ${registro}    IN    @{registros}
+        ${state}=       Get From Dictionary    ${registro}    state
+        ${employee}=    Get From Dictionary    ${state}       employee
+        ${cpf}=         Get From Dictionary    ${employee}    cpf
+
+        IF    '${cpf}' == '${CPF_API}'
+            ${cargo_api}=    Get From Dictionary    ${employee}    role
+            
+            Log    CPF validado: ${CPF_API}
+            Log    Cargo esperado: ${cargo}
+            Log    Cargo retornado pela API: ${cargo_api}
+
+            Should Be Equal    ${cargo_api}    ${cargo}
+            ...    O cargo esperado era '${cargo}', mas a API retornou '${cargo_api}'.
+            
+            BREAK
+        ELSE
+            
+            Log    CPF cadastrado ainda não foi encontrado. Continuando a busca.
+        END
+    END
+
+#Keywords do CT-010
+E Seleciono A Atividade "${atividade}"
+    Quando Seleciono A Atividade "${atividade}"
+
+E Seleciono O EPI "${epi}"
+    Quando Seleciono O EPI "${epi}"
+
+E Informo O Numero Do CA "${ca}"
+    Input Text    ${CAMPO_CA_NUMBER}    ${ca}
+
+Quando Informo Que O Trabalhador Nao Usa EPI
+    Click Element    ${CHECKBOX_NAO_USA_EPI}
+    Checkbox Should Be Selected    ${CHECKBOX_NAO_USA_EPI}
+
 E Clico Em "Salvar"
     Quando Clico Em "Salvar"
+
+Entao Os Dados De EPI Nao Devem Constar No Registro Da API
+    ${response}=    GET    ${URL}employees
+    Status Should Be    200    ${response}
+
+    ${registros}=    Set Variable    ${response.json()}
+
+    FOR    ${registro}    IN    @{registros}
+        ${state}=       Get From Dictionary    ${registro}    state
+        ${employee}=    Get From Dictionary    ${state}       employee
+        ${cpf}=         Get From Dictionary    ${employee}    cpf
+
+        IF    '${cpf}' == '${CPF_API}'
+            Log    CPF validado: ${CPF_API}
+            Log    Dados retornados pela API: ${employee}
+
+            ${usa_epi}=    Get From Dictionary    ${employee}    usesEpi
+
+            Should Be Equal    ${usa_epi}    ${False}
+
+            Dictionary Should Not Contain Key    ${employee}    activity
+            Dictionary Should Not Contain Key    ${employee}    epi
+            Dictionary Should Not Contain Key    ${employee}    caNumber
+
+            RETURN
+        ELSE
+            
+            Log    CPF cadastrado ainda não foi encontrado. Continuando a busca.
+        END
+    END
+
+#Keywords do CT-011
+Quando Seleciono A Atividade "${atividade}"
+    Wait Until Element Is Visible    ${CAMPO_ATIVIDADE}
+    Click Element    ${CAMPO_ATIVIDADE}
+
+    ${LISTA_ATIVIDADE}=    Set Variable
+    ...    xpath=//div[contains(@class,"ant-select-item-option") and @title="${atividade}"]
+
+    Wait Until Element Is Visible    ${LISTA_ATIVIDADE}
+    Click Element    ${LISTA_ATIVIDADE}
+
+E A Atividade "${atividade}" Deve Constar No Registro Na API
+    ${response}=    GET    ${URL}employees
+    Status Should Be    200    ${response}
+
+    ${registros}=    Set Variable    ${response.json()}
+    
+    FOR    ${registro}    IN    @{registros}
+        ${state}=       Get From Dictionary    ${registro}    state
+        ${employee}=    Get From Dictionary    ${state}       employee
+        ${cpf}=         Get From Dictionary    ${employee}    cpf
+
+        IF    '${cpf}' == '${CPF_API}'
+            ${atividade_api}=    Get From Dictionary    ${employee}    activity
+
+            Log    CPF validado: ${CPF_API}
+            Log    Atividade esperada: ${atividade}
+            Log    Atividade retornada pela API: ${atividade_api}
+
+            Should Be Equal    ${atividade_api}    ${atividade}
+            ...    A atividade esperada era '${atividade}', mas o registro na API retornou '${atividade_api}'.
+
+            BREAK
+        END
+    END
+
+#Keywords do CT-012
+Quando Seleciono O EPI "${epi}"
+    Wait Until Element Is Visible    ${CAMPO_EPI}
+    Click Element    ${CAMPO_EPI}
+
+    ${LISTA_EPI}=    Set Variable
+    ...    xpath=//div[contains(@class,"ant-select-item-option") and @title="${epi}"]
+
+    Wait Until Element Is Visible    ${LISTA_EPI}
+    Click Element    ${LISTA_EPI}
+
+E O EPI "${epi}" Deve Constar No Registro Na API
+    ${response}=    GET    ${URL}employees
+    Status Should Be    200    ${response}
+
+    ${registros}=    Set Variable    ${response.json()}
+
+    FOR    ${registro}    IN    @{registros}
+        ${state}=       Get From Dictionary    ${registro}    state
+        ${employee}=    Get From Dictionary    ${state}       employee
+        ${cpf}=         Get From Dictionary    ${employee}    cpf
+
+        IF    '${cpf}' == '${CPF_API}'
+            ${epi_api}=         Get From Dictionary    ${employee}    epi
+            ${epi_esperado}=    Get From Dictionary    ${EPIS_API}    ${epi}
+
+            Log    CPF validado: ${CPF_API}
+            Log    EPI selecionado na Web: ${epi}
+            Log    EPI esperado na API: ${epi_esperado}
+            Log    EPI retornado pela API: ${epi_api}
+
+            Should Be Equal    ${epi_api}    ${epi_esperado}
+            ...    O EPI esperado era '${epi_esperado}', mas a API retornou '${epi_api}'.
+
+            BREAK
+        END
+    END
+
+#Keywords do CT-014
+E Preencho Apenas Os Campos Obrigatorios Com Dados Validos
+    [Arguments]    ${nome}=${NOME_FUNCIONARIO}
+
+    Input Text    ${CAMPO_NOME}             ${nome}
+    Quando Informo Um CPF Com 11 Digitos
+    Input Text    ${CAMPO_RG}               ${RG_FUNCIONARIO}
+    Input Text    ${CAMPO_DATA_NASCIMENTO}  ${DATA_NASCIMENTO}
+    Input Text    ${CAMPO_CA_NUMBER}        ${CA_NUMBER}
+
+E Altero O Status Para "${status}"
+    Quando Altero O Status Para "${status}"
+
+E Seleciono O Sexo "${sexo}"
+    Click Element    xpath=//input[@type="radio" and @value="${sexo}"]/ancestor::label[1]
+
+Entao O Cadastro Deve Ser Realizado Com Sucesso
+    Wait Until Element Is Not Visible    ${CAMPO_NOME}
+    Wait Until Element Is Visible        ${BTN_VER_APENAS_ATIVOS}
 
 Obter Quantidades Do Contador
     Wait Until Keyword Succeeds    5s    500ms    Contador Deve Estar Carregado
