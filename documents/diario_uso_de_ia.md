@@ -6,6 +6,7 @@ IAs utilizada: chatGPT (GPT 5.6 Sol), Copilot no VS Code e modo IA do Google.
 - Entender erro no console após criar um registro fora do padrão e checar que a página Inicial ficou branca.
 - Discutir argumentos para embasar a classificação dos bugs na prioridade P1. Eu classifiquei, mas queria mais informações sobre impactos.
 - Modo IA do Google: ao pesquisar no Google a IA retornava informações condensadas de várias páginas.
+- Diminuir o tamanho dos vídeos gravados, reduzindo o total de 84MB para 10MB.
 
 ### Utilizações na automação 
 - Entender os erros após os cenários falharem.
