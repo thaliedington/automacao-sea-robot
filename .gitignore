@@ -1,0 +1,10 @@
+results/
+output.xml
+log.html
+report.html
+.venv/
+.vscode/
+.DS_Store
+results/
+__pycache__/
+*.pyc
