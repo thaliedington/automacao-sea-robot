@@ -110,6 +110,22 @@ E Preencho O Campo "${campo}" Com Dado Valido
 
     END
 
+#Keywords do CT-004
+Quando Informo Um CPF Com 10 Digitos
+    Input Text    ${CAMPO_CPF}    1234567890
+
+Entao O Campo CPF Deve Informar Que O Valor Esta Incompleto
+    Element Should Be Visible    ${CAMPO_CPF}
+
+    ${mensagem}=    Get Element Attribute    ${CAMPO_CPF}    validationMessage
+
+    Should Not Be Empty    ${mensagem}
+    ...    Ocorreu um erro: O campo CPF aceitou um valor contendo apenas 10 dígitos.
+
+    Log    Mensagem apresentada pelo campo CPF: ${mensagem}
+
+    Capture Page Screenshot    CT-004_-_Informar_CPF_com_10_digitos.png
+
 #Keywords do CT-005
 Quando Informo Um CPF Com 11 Digitos
     ${CPF_FUNCIONARIO}=    Cpf
@@ -119,6 +135,36 @@ Quando Informo Um CPF Com 11 Digitos
     Set Test Variable    ${CPF_API}
 
     Input Text    ${CAMPO_CPF}    ${CPF_API}
+
+Entao O Campo Deve Aceitar O Valor Informado
+    ${elemento}=    Get WebElement    ${CAMPO_CPF}
+
+    ${mensagem}=    Execute Javascript
+    ...    return arguments[0].validationMessage;
+    ...    ARGUMENTS    ${elemento}
+
+    Should Be Empty    ${mensagem}
+
+    Capture Page Screenshot    CT-005_-_Informar_CPF_com_11_digitos.png
+
+#Keywords do CT-006
+Quando Informo Um CPF Com 12 Digitos
+    Input Text    ${CAMPO_CPF}    123456789012
+
+Entao O Campo CPF Deve Permitir Apenas 11 Digitos
+    ${cpf_campo}=    Get Value    ${CAMPO_CPF}
+
+    ${cpf_sem_mascara}=    Remove String    ${cpf_campo}    .    -
+
+    ${quantidade_digitos}=    Get Length    ${cpf_sem_mascara}
+
+    Should Be Equal As Integers    ${quantidade_digitos}    11
+    ...    Ocorreu um erro: O campo CPF permitiu ${quantidade_digitos} dígitos, mas deveria permitir no máximo 11.
+
+    Capture Page Screenshot    CT-006_-_Informar_CPF_com_12_digitos.png
+
+E Clico Em "Salvar"
+    Quando Clico Em "Salvar"
 
 Obter Quantidades Do Contador
     Wait Until Keyword Succeeds    5s    500ms    Contador Deve Estar Carregado
