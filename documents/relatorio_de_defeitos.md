@@ -57,9 +57,9 @@ A interface deve tratar registros inválidos de forma segura e continuar renderi
 Após a criação do registro fora do padrão, a página deixa de renderizar corretamente exibindo uma tela branca e o erro no DevTools: "TypeError: Cannot read properties of undefined (reading 'employee')". Ao excluir o registro inválido pela API e atualizar a página, a interface volta ao normal esperado.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug001-renderizacao.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/a0a65ac5-2412-4f69-ae80-e70858c3b400
+
 
 **Impacto:** 
 Um único registro inconsistente na API pode indisponibilizar a aplicação.
@@ -116,9 +116,9 @@ A API deve rejeitar a atualização quando o payload não respeitar a estrutura 
 A API aceita a requisição e substitui o conteúdo anterior de state pela estrutura enviada, removendo os dados de employee.
 
 **Evidência:**
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug003-put.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/9a9552fe-e66e-47ac-bc1a-abe190b7fa6f
+
 
 **Impacto:**
 Permite sobrescrever um registro válido com uma estrutura incompatível com o padrão utilizado pela aplicação, causando perda de dados e conforme relatado no BUG-001 esses registros causam indisponibilidade na interface.
@@ -153,9 +153,9 @@ O método PATCH deve atualizar somente o campo enviado na requisição e preserv
 O conteúdo anterior de state.employee é substituído pelo payload enviado. Os demais campos do funcionário são removidos e apenas name permanece.
 
 **Evidência:**
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug004-patch.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/ad5e6e48-7ab2-4375-bd30-b7af0c663ac9
+
 
 **Impacto:**
 Uma atualização parcial pode apagar informações previamente cadastradas do funcionário, causando perda de dados e comprometendo a integridade do registro e conforme relatado no BUG-001 esses registros causam indisponibilidade na interface.
@@ -232,9 +232,9 @@ O sistema deve aceitar somente formatos de arquivo permitidos para o envio de um
 O campo de upload aceita arquivos sem extensão e arquivos com tipo perigoso, sem apresentar mensagem de validação.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug007-uploadIrrestrito.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/2433c55e-6808-4dc1-bfd2-d0c2e86ea930
+
 
 **Impacto:**  
 A ausência de uma validação adequada de tipo de arquivo aumenta o risco de envio de conteúdo não previsto ou tipo perigoso. De acordo com o OWASP Top 10:2025 esse comportamento está relacionado à ***CWE-434 — Unrestricted Upload of File with Dangerous Type*** na categoria ***A06:2025 — Insecure Design***.
@@ -258,9 +258,9 @@ O cadastro não deve ser concluído e o campo CPF deve informar que o valor pree
 O sistema permite prosseguir com um CPF de 11 dígitos que não é válido.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug008-cpfInvalido.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/138aaa95-05a6-431d-9175-d2d9797c9044
+
 
 **Impacto:** Permite o armazenamento de um CPF inválido, comprometendo a integridade e a confiabilidade dos dados cadastrais.
 
@@ -283,9 +283,9 @@ O cadastro não deve ser concluído e o sistema deve informar que o CPF já est�
 O sistema permite concluir um novo cadastro utilizando um CPF já existente.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug009-cpfDuplicado.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/a10a4c9b-28b8-4739-9c23-a26f1d980a63
+
 
 **Impacto:** CPF é um dado único. Permitir registros duplicados para o mesmo CPF  compromete a unicidade, rastreabilidade e confiabilidade dos dados cadastrais.
 
@@ -309,9 +309,9 @@ O cadastro não deve ser concluído quando campos obrigatórios contêm apenas e
 O sistema prossegue com o cadastro mesmo com campos obrigatórios preenchidos somente com espaços.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug010-espacos.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/0bba7d3c-d035-4843-b6e1-39cc4d13d94d
+
 
 **Impacto:**  Permite o armazenamento de dados obrigatórios sem informação real, comprometendo a qualidade e a consistência dos registros cadastrados.
 
@@ -333,9 +333,9 @@ O EPI selecionado deve permanecer inalterado ao interagir com outros campos.
 Ao interagir com o campo `Informe o número do CA:`, o EPI previamente selecionado é alterado automaticamente para `Capacete de segurança`.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug011-alteracaoEpi.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/bc5c1d57-aa6f-4399-9796-12475441d430
+
 
 **Impacto:**  
 Pode provocar o cadastro de um EPI diferente daquele informado pelo usuário, comprometendo a consistência e a confiabilidade dos dados de segurança do trabalhador.
@@ -361,9 +361,9 @@ Ao marcar que o trabalhador não usa EPI, os campos de Atividade, EPI e Número 
 Após marcar que o trabalhador não usa EPI, os campos ficam indisponíveis para edição na interface, porém os valores anteriormente informados continuam persistidos na API.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bugs012-naoUsaEPI.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/a539711e-a1d7-462b-a744-7e85107da776
+
 
 **Impacto:**  
 O sistema mantém informações incompatíveis com a opção selecionada pelo usuário, gerando inconsistência entre a interface e os dados persistidos. Isso pode comprometer a confiabilidade das informações de segurança do trabalhador e afetar regras de negócio que dependam do indicador de uso de EPI.
@@ -387,9 +387,9 @@ O valor selecionado no campo Cargo deve ser persistido corretamente no campo `ca
 O cadastro é concluído na interface, porém o valor `Cargo 01` não é persistido corretamente no campo `cargo`.
 
 **Evidência:** 
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug013-cargo01.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/39dc940f-9c64-4e09-869d-1d8dce760d30
+
 
 **Impacto:** Informação selecionada na interface não é persistida corretamente no backend.
 
@@ -412,9 +412,9 @@ O valor selecionado no campo Atividade deve ser persistido corretamente no campo
 O cadastro é concluído na interface, porém o valor `Ativid 01` não é persistido corretamente no campo `activity`.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug014-ativid01.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/fce2ea71-02f2-4617-a4b0-002692118da5
+
 
 **Impacto:**  
 O sistema perde uma informação relevante informada pelo usuário após um cadastro aparentemente concluído com sucesso, comprometendo a integridade e a completude dos dados do funcionário.
@@ -438,9 +438,9 @@ O valor selecionado no campo EPI deve ser persistido corretamente no campo `epi`
 O cadastro é concluído na interface, porém o `epi` não aparece no registro.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug015-epiCapacete.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/845f79ec-7ca8-4b63-a2c3-e3978de79d4a
+
 
 **Impacto:** Perda do EPI selecionado durante a persistência.
 
@@ -461,9 +461,9 @@ A aplicação deve avançar para outra etapa.
 Elementos da página atual continuam visíveis após o clique, indicando que não houve avanço.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug016-proximoPasso.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/7665cf7c-e5d7-49f6-8790-f51e28c513ad
+
 
 **Impacto:** Bloqueia ou prejudica a continuidade do fluxo principal.
 
@@ -485,9 +485,9 @@ O sistema deve exibir um novo campo para permitir o cadastro de uma segunda ativ
 Ao clicar no botão com os campos vazio, ele informa que o campo Nome é obrigatório e ao clicar após preencher os dados, o formulário salva o novo registro funcionando como o botão Salvar.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug017-addAtividade.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/db789009-d179-4253-8b34-90913f1535c1
+
 
 **Impacto:**  
 Impede o cadastro de múltiplas atividades para o mesmo funcionário, comprometendo a completude das informações registradas.
@@ -509,9 +509,9 @@ O aplicação deve responder com alguma ação, como aparecer uma segunda linha 
 Nada acontece após solicitar a inclusão de outro EPI.
 
 **Evidência:**  
-<video width="100%" controls>
-  <source src="../resources/files/bugs/bug018-addEpi.mp4" type="video/mp4">
-</video>
+
+https://github.com/user-attachments/assets/23d9c299-889a-4028-8d62-b137d2727fd8
+
 
 **Impacto:** 
 Impede o cadastro de mais de um EPI para a mesma atividade, limitando o registro correto dos equipamentos utilizados pelo trabalhador.
@@ -556,6 +556,8 @@ O usuário deve conseguir percorrer a listagem e visualizar todos os registros.
 Não há rolagem vertical para visualizar todos os cards, sendo necessário reduzir o zoom do navegador.
 
 **Evidência:**
+
+https://github.com/user-attachments/assets/32f3e48d-ae14-4eaa-bcb4-68aac37425af
 
 
 **Impacto:** 
