@@ -40,6 +40,30 @@ E O Primeiro Registro Deve Seguir O Formato Esperado
     END
 
 #Keywords do CA-002
+Quando Consulto Os Cabecalhos Dos Funcionarios
+    ${response}=    HEAD
+    ...    ${ENDPOINT_FUNCIONARIOS}
+    ...    expected_status=any
+
+    Set Test Variable    ${RESPOSTA_HEAD}    ${response}
+
+
+Entao O Status Da Resposta HEAD Deve Ser 200
+    Status Should Be    200    ${RESPOSTA_HEAD}
+
+
+E A Resposta HEAD Nao Deve Conter Corpo
+    Should Be Empty    ${RESPOSTA_HEAD.content}
+
+
+E O Content Type Da Resposta HEAD Deve Ser JSON
+    ${content_type}=    Get From Dictionary
+    ...    ${RESPOSTA_HEAD.headers}
+    ...    Content-Type
+
+    Should Contain    ${content_type}    application/json
+
+#Keywords do CA-003
 E Tenho Um Funcionario Valido Para Teste
     ${cpf_formatado}=    Cpf
     ${cpf}=    Remove String    ${cpf_formatado}    .    -
@@ -141,26 +165,3 @@ Buscar Registro De Teste No GET
 
     RETURN    ${EMPTY}
 
-#Keywords do CA-003
-Quando Consulto Os Cabecalhos Dos Funcionarios
-    ${response}=    HEAD
-    ...    ${ENDPOINT_FUNCIONARIOS}
-    ...    expected_status=any
-
-    Set Test Variable    ${RESPOSTA_HEAD}    ${response}
-
-
-Entao O Status Da Resposta HEAD Deve Ser 200
-    Status Should Be    200    ${RESPOSTA_HEAD}
-
-
-E A Resposta HEAD Nao Deve Conter Corpo
-    Should Be Empty    ${RESPOSTA_HEAD.content}
-
-
-E O Content Type Da Resposta HEAD Deve Ser JSON
-    ${content_type}=    Get From Dictionary
-    ...    ${RESPOSTA_HEAD.headers}
-    ...    Content-Type
-
-    Should Contain    ${content_type}    application/json

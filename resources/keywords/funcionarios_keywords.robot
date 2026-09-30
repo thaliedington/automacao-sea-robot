@@ -53,7 +53,7 @@ Entao O Status Deve Estar Inativo
     ${estado}=    Get Element Attribute    ${SWITCH_STATUS}    aria-checked
     Should Be Equal    ${estado}    false
 
-#Keywords do CA-006
+#Keywords do CA-005
 E Nenhum Campo Obrigatorio Foi Preenchido
     ${nome}=    Get Value    ${CAMPO_NOME}
     Should Be Empty    ${nome}
@@ -124,7 +124,7 @@ Entao O Campo CPF Deve Informar Que O Valor Esta Incompleto
 
     Log    Mensagem apresentada pelo campo CPF: ${mensagem}
 
-    Capture Page Screenshot    CA-004_-_Informar_CPF_com_10_digitos.png
+    Capture Page Screenshot    CA-010_-_Informar_CPF_com_10_digitos.png
 
 #Keywords do CA-011
 Quando Informo Um CPF Com 11 Digitos
@@ -145,7 +145,7 @@ Entao O Campo Deve Aceitar O Valor Informado
 
     Should Be Empty    ${mensagem}
 
-    Capture Page Screenshot    CA-005_-_Informar_CPF_com_11_digitos.png
+    Capture Page Screenshot    CA-011_-_Informar_CPF_com_11_digitos.png
 
 #Keywords do CA-012
 Quando Informo Um CPF Com 12 Digitos
@@ -161,7 +161,7 @@ Entao O Campo CPF Deve Permitir Apenas 11 Digitos
     Should Be Equal As Integers    ${quantidade_digitos}    11
     ...    Ocorreu um erro: O campo CPF permitiu ${quantidade_digitos} dígitos, mas deveria permitir no máximo 11.
 
-    Capture Page Screenshot    CA-006_-_Informar_CPF_com_12_digitos.png
+    Capture Page Screenshot    CA-012_-_Informar_CPF_com_12_digitos.png
 
 #Keywords do CA-013
 Quando Informo A Data De Nascimento "${data}"
@@ -291,43 +291,7 @@ Entao Os Dados De EPI Nao Devem Constar No Registro Da API
         END
     END
 
-#Keywords do CA-011
-Quando Seleciono A Atividade "${atividade}"
-    Wait Until Element Is Visible    ${CAMPO_ATIVIDADE}
-    Click Element    ${CAMPO_ATIVIDADE}
-
-    ${LISTA_ATIVIDADE}=    Set Variable
-    ...    xpath=//div[contains(@class,"ant-select-item-option") and @title="${atividade}"]
-
-    Wait Until Element Is Visible    ${LISTA_ATIVIDADE}
-    Click Element    ${LISTA_ATIVIDADE}
-
-E A Atividade "${atividade}" Deve Constar No Registro Na API
-    ${response}=    GET    ${URL}employees
-    Status Should Be    200    ${response}
-
-    ${registros}=    Set Variable    ${response.json()}
-    
-    FOR    ${registro}    IN    @{registros}
-        ${state}=       Get From Dictionary    ${registro}    state
-        ${employee}=    Get From Dictionary    ${state}       employee
-        ${cpf}=         Get From Dictionary    ${employee}    cpf
-
-        IF    '${cpf}' == '${CPF_API}'
-            ${atividade_api}=    Get From Dictionary    ${employee}    activity
-
-            Log    CPF validado: ${CPF_API}
-            Log    Atividade esperada: ${atividade}
-            Log    Atividade retornada pela API: ${atividade_api}
-
-            Should Be Equal    ${atividade_api}    ${atividade}
-            ...    A atividade esperada era '${atividade}', mas o registro na API retornou '${atividade_api}'.
-
-            BREAK
-        END
-    END
-
-#Keywords do CA-012
+#Keywords do CA-016
 Quando Seleciono O EPI "${epi}"
     Wait Until Element Is Visible    ${CAMPO_EPI}
     Click Element    ${CAMPO_EPI}
@@ -365,7 +329,43 @@ E O EPI "${epi}" Deve Constar No Registro Na API
         END
     END
 
-#Keywords do CA-014
+#Keywords do CA-017
+Quando Seleciono A Atividade "${atividade}"
+    Wait Until Element Is Visible    ${CAMPO_ATIVIDADE}
+    Click Element    ${CAMPO_ATIVIDADE}
+
+    ${LISTA_ATIVIDADE}=    Set Variable
+    ...    xpath=//div[contains(@class,"ant-select-item-option") and @title="${atividade}"]
+
+    Wait Until Element Is Visible    ${LISTA_ATIVIDADE}
+    Click Element    ${LISTA_ATIVIDADE}
+
+E A Atividade "${atividade}" Deve Constar No Registro Na API
+    ${response}=    GET    ${URL}employees
+    Status Should Be    200    ${response}
+
+    ${registros}=    Set Variable    ${response.json()}
+    
+    FOR    ${registro}    IN    @{registros}
+        ${state}=       Get From Dictionary    ${registro}    state
+        ${employee}=    Get From Dictionary    ${state}       employee
+        ${cpf}=         Get From Dictionary    ${employee}    cpf
+
+        IF    '${cpf}' == '${CPF_API}'
+            ${atividade_api}=    Get From Dictionary    ${employee}    activity
+
+            Log    CPF validado: ${CPF_API}
+            Log    Atividade esperada: ${atividade}
+            Log    Atividade retornada pela API: ${atividade_api}
+
+            Should Be Equal    ${atividade_api}    ${atividade}
+            ...    A atividade esperada era '${atividade}', mas o registro na API retornou '${atividade_api}'.
+
+            BREAK
+        END
+    END
+
+#Keywords do CA-018
 E Preencho Apenas Os Campos Obrigatorios Com Dados Validos
     [Arguments]    ${nome}=${NOME_FUNCIONARIO}
 
@@ -385,14 +385,14 @@ Entao O Cadastro Deve Ser Realizado Com Sucesso
     Wait Until Element Is Not Visible    ${CAMPO_NOME}
     Wait Until Element Is Visible        ${BTN_VER_APENAS_ATIVOS}
 
-#Keywords do CA-018
+#Keywords do CA-019
 Quando Seleciono O Arquivo ASO "${arquivo}"
     Choose File    ${CAMPO_ARQUIVO}    ${EXECDIR}/resources/files/${arquivo}
 
 E O Nome Do Arquivo Deve Ser Exibido
     Page Should Contain    girl-icon2.jpg
 
-#Keywords do CT-019
+#Keywords do CT-020
 E Seleciono O Arquivo ASO "${arquivo}"
     Quando Seleciono O Arquivo ASO "${arquivo}"
 
@@ -412,7 +412,7 @@ Entao Somente O Arquivo ASO "${arquivo}" Deve Estar Selecionado
     Should Be Equal    ${nome}    ${arquivo}
     Page Should Contain    ${arquivo}
 
-#Keywords do CA-020
+#Keywords do CA-021
 E Existem Funcionarios Ativos E Inativos Cadastrados
     ${total_ativos}    ${total_cadastros}=    Obter Quantidades Do Contador
 
@@ -436,7 +436,7 @@ E Funcionarios Inativos Nao Devem Ser Exibidos
     Should Be Equal As Integers    ${total_inativos_ocultos}    ${TOTAL_INATIVOS}
     ...    Ocorreu um erro: Foram ocultados ${total_inativos_ocultos} funcionários inativos, mas o total esperado era ${TOTAL_INATIVOS}.
 
-#Keywords do CA-021
+#Keywords do CA-022
 E O Filtro "${filtro}" Esta Selecionado
     ${total_ativos}    ${total_cadastros}=    Obter Quantidades Do Contador
 
@@ -482,7 +482,7 @@ Contador Deve Estar Carregado
     ${texto_contador}=    Get Text    ${CONTADOR_ATIVOS}
     Should Match Regexp    ${texto_contador}    Ativos\\s*\\d+\\s*/\\s*\\d+
 
-#Keywords do CA-022
+#Keywords do CA-023
 E A Etapa Esta Marcada Como Nao
     ${estado}=    Get Element Attribute    ${SWITCH_ETAPA}    aria-checked
     Should Be Equal    ${estado}    false
@@ -499,7 +499,7 @@ Entao A Etapa Deve Ser Exibida Como Concluida
     ${texto}=    Get Text    ${STATUS_PRIMEIRO_ITEM}
     Should Be Equal    ${texto}    CONCLUIDO
 
-    Capture Page Screenshot    CA-021_-_Primeira_Etapa_Concluida.png
+    Capture Page Screenshot    CA-023_-_Primeira_Etapa_Concluida.png
 
 Entao A Exibicao De Concluida Deve Desaparecer
     Wait Until Element Is Not Visible    ${STATUS_PRIMEIRO_ITEM}
