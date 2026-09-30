@@ -271,10 +271,7 @@ O campo mantém as 11 letras e não apresenta mensagem de validação para o CPF
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/06b17a6a-ec9a-42ce-adbf-a0b976556f61
-
-
-https://github.com/user-attachments/assets/aae5867f-bd5f-425e-9597-ac5892aa435e
+https://github.com/user-attachments/assets/b572eedf-9fe5-4d51-b778-7fefa83b2ce9
 
 
 **Impacto:**  
@@ -300,7 +297,7 @@ O sistema permite prosseguir com um CPF de 11 dígitos que não é válido.
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/138aaa95-05a6-431d-9175-d2d9797c9044
+https://github.com/user-attachments/assets/bde97b87-5e1c-49fe-bd71-944fdad0c533
 
 
 **Impacto:** Permite o armazenamento de um CPF inválido, comprometendo a integridade e a confiabilidade dos dados cadastrais.
@@ -326,7 +323,7 @@ O sistema permite concluir um novo cadastro utilizando um CPF já existente.
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/a10a4c9b-28b8-4739-9c23-a26f1d980a63
+https://github.com/user-attachments/assets/fd5eda36-9839-4ee9-b128-54c609ba86e5
 
 
 **Impacto:** CPF é um dado único. Permitir registros duplicados para o mesmo CPF  compromete a unicidade, rastreabilidade e confiabilidade dos dados cadastrais.
@@ -353,7 +350,7 @@ O sistema prossegue com o cadastro mesmo com campos obrigatórios preenchidos so
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/0bba7d3c-d035-4843-b6e1-39cc4d13d94d
+https://github.com/user-attachments/assets/f153810f-a3e2-4cf2-9deb-6e38a9ac9ef7
 
 
 **Impacto:**  Permite o armazenamento de dados obrigatórios sem informação real, comprometendo a qualidade e a consistência dos registros cadastrados.
@@ -378,7 +375,7 @@ Ao interagir com o campo `Informe o número do CA:`, o EPI previamente seleciona
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/bc5c1d57-aa6f-4399-9796-12475441d430
+https://github.com/user-attachments/assets/f6ffa4c4-2281-444b-ab81-2925f1413ee1
 
 
 **Impacto:**  
@@ -407,7 +404,7 @@ Após marcar que o trabalhador não usa EPI, os campos ficam indisponíveis para
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/a539711e-a1d7-462b-a744-7e85107da776
+https://github.com/user-attachments/assets/ec7bda9a-a546-4d50-be10-242b1dafe28d
 
 
 **Impacto:**  
@@ -434,7 +431,7 @@ O cadastro é concluído na interface, porém o valor `Cargo 01` não é persist
 
 **Evidência:** 
 
-https://github.com/user-attachments/assets/39dc940f-9c64-4e09-869d-1d8dce760d30
+https://github.com/user-attachments/assets/5b87f496-9636-4518-8721-89bbe7f4bcb7
 
 
 **Impacto:** Informação selecionada na interface não é persistida corretamente no backend.
@@ -460,7 +457,7 @@ O cadastro é concluído na interface, porém o valor `Ativid 01` não é persis
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/fce2ea71-02f2-4617-a4b0-002692118da5
+https://github.com/user-attachments/assets/788858cc-5102-4a8e-aca0-497d5d42fb6e
 
 
 **Impacto:**  
@@ -487,7 +484,7 @@ O cadastro é concluído na interface, porém o `epi` não aparece no registro.
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/845f79ec-7ca8-4b63-a2c3-e3978de79d4a
+https://github.com/user-attachments/assets/ede15cab-8e34-4ce3-912f-4859fa6bfe5e
 
 
 **Impacto:** Perda do EPI selecionado durante a persistência.
@@ -511,7 +508,7 @@ Elementos da página atual continuam visíveis após o clique, indicando que nã
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/7665cf7c-e5d7-49f6-8790-f51e28c513ad
+https://github.com/user-attachments/assets/215d157f-426c-4b41-97f3-1fc4080e11cb
 
 
 **Impacto:** Bloqueia ou prejudica a continuidade do fluxo principal.
@@ -536,7 +533,7 @@ Ao clicar no botão com os campos vazio, ele informa que o campo Nome é obrigat
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/db789009-d179-4253-8b34-90913f1535c1
+https://github.com/user-attachments/assets/70892d45-d529-4cbd-b88e-060def31c631
 
 
 **Impacto:**  
@@ -561,7 +558,7 @@ Nada acontece após solicitar a inclusão de outro EPI.
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/23d9c299-889a-4028-8d62-b137d2727fd8
+https://github.com/user-attachments/assets/1e039101-f0c8-4644-a503-bebbc7631e72
 
 
 **Impacto:** 
@@ -584,7 +581,7 @@ O sistema não deve permitir uma data de nascimento posterior à data atual.
 O campo aceita uma data futura sem apresentar validação ou impedir o preenchimento.
 
 **Evidência:**  
-![BUG-019](<../resources/files/bugs/bug019-dataFutura.png>)
+![BUG-020](<../resources/files/bugs/bug019-dataFutura.png>)
 
 **Impacto:**  
 Permite o cadastro de uma informação inválida, comprometendo a consistência dos dados do funcionário.
@@ -610,7 +607,7 @@ Não há rolagem vertical para visualizar todos os cards, sendo necessário redu
 
 **Evidência:**
 
-https://github.com/user-attachments/assets/32f3e48d-ae14-4eaa-bcb4-68aac37425af
+https://github.com/user-attachments/assets/4725e9e9-8ef1-4ca9-9ff5-5257dd9b44fc
 
 
 **Impacto:** 
@@ -637,7 +634,8 @@ O formulário apresenta o nome do arquivo e a opção “Selecione o arquivo”,
 
 **Evidência:**  
 
-https://github.com/user-attachments/assets/46ade099-3ad6-4193-bedc-2ac40ba2488e
+https://github.com/user-attachments/assets/7544a1ac-b0ce-4089-950e-f8439363b896
+
 
 **Impacto:**  
 O usuário não consegue corrigir uma seleção acidental para concluir o cadastro sem anexo.
