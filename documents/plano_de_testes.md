@@ -120,11 +120,13 @@ E o campo 'role' deve retornar o valor correspondente ao cargo
 #### [CT-012] Cadastrar trabalhador sem EPI
 Dado que estou no formulário de cadastro de funcionário  
 E preencho todos os campos obrigatórios com dados válidos  
-E preencho os campos EPI e Numero do CA
+E preencho os campos EPI
+E não preencho o numero do CA
 Quando informo que o trabalhar não usa EPI  
 E clico em Salvar  
-E o cadastro foi realizado com sucesso  
-Então o campo os campos desabilitados não deve constar no GET /employees  
+E o cadastro deve ser realizado com sucesso  
+Então os campos desabilitados não deve constar no GET /employees
+E a interface não deve informar que o campo numero do CA é obrigatório
 
 #### [CT-013] Validar persistência das atividades
 Dado que estou no formulário de cadastro de funcionário  
