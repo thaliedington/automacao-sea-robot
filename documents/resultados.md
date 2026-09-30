@@ -36,8 +36,8 @@ Este documento registra o resultado de cada cenário do Plano de Testes. Informa
 | [CT-021] Explorar letras e traços no RG | Passou | Manual | | 
 | [CT-022] Alternar a opção “O trabalhador não usa EPI” | Passou | CA-015 | - | 
 | [CT-023] Anexar Atestado de Saude Ocupacional Valido | Passou | CA-019 | - |
-| [CT-024] Validar comportamento de arquivo ASO de 50 MB | ? | Manual | ? |
-| [CT-025] Selecionar arquivo ASO vazio | ? | Manual | ? |
+| [CT-024] Validar comportamento de arquivo ASO de 50 MB | Passou | Manual | - |
+| [CT-025] Selecionar arquivo ASO vazio | Passou | Manual | - |
 | [CT-026] Substituir o ASO antes de salvar | Passou | CA-020 | - |
 | [CT-027] Remover o ASO antes de salvar | Falhou | Manual | BUG-022 |
 | [CT-028] Marcar a primeira etapa como concluída | Passou | CA-023 | - |
