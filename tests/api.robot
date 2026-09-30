@@ -5,13 +5,23 @@ Test Teardown    Limpar Registro Criado Indevidamente
 
 
 *** Test Cases ***
-CT-019 - Validar Formato Dos Registros No GET
+CA-001 - Validar Formato Dos Registros No GET
+    [Tags]    CT-031
     Dado Que Tenho O Endpoint De Funcionarios
     Quando Consulto A Lista De Funcionarios
     Entao O Status Da Resposta Deve Ser 200
     E O Primeiro Registro Deve Seguir O Formato Esperado
 
-CT-020 - Validar Inclusao Alteracao E Exclusao De Funcionario Na API
+CA-002 - Validar O Metodo HEAD
+    [Tags]    CT-032
+    Dado Que Tenho O Endpoint De Funcionarios
+    Quando Consulto Os Cabecalhos Dos Funcionarios
+    Entao O Status Da Resposta HEAD Deve Ser 200
+    E A Resposta HEAD Nao Deve Conter Corpo
+    E O Content Type Da Resposta HEAD Deve Ser JSON
+
+CA-003 - Validar Inclusao Alteracao E Exclusao De Funcionario Na API
+    [Tags]    CT-033    CT-036    CT-039
     Dado Que Tenho O Endpoint De Funcionarios
     E Tenho Um Funcionario Valido Para Teste
 
@@ -26,10 +36,3 @@ CT-020 - Validar Inclusao Alteracao E Exclusao De Funcionario Na API
     Quando Excluo O Funcionario Pelo DELETE
     Entao O DELETE Deve Retornar Sucesso
     E O GET Nao Deve Retornar O Funcionario Excluido
-
-CT-021 - Validar O Metodo HEAD
-    Dado Que Tenho O Endpoint De Funcionarios
-    Quando Consulto Os Cabecalhos Dos Funcionarios
-    Entao O Status Da Resposta HEAD Deve Ser 200
-    E A Resposta HEAD Nao Deve Conter Corpo
-    E O Content Type Da Resposta HEAD Deve Ser JSON

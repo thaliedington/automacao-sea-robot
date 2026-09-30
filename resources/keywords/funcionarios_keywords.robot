@@ -30,7 +30,7 @@ Dado Que Estou No Formulario De Cadastro De Funcionario
 
     Wait Until Element Is Visible    ${CAMPO_NOME}
 
-#Keywords do CT-001
+#Keywords do CA-004
  E O Status Inicial Esta Inativo
     ${estado}=    Get Element Attribute    ${SWITCH_STATUS}    aria-checked
     Should Be Equal    ${estado}    false
@@ -53,7 +53,7 @@ Entao O Status Deve Estar Inativo
     ${estado}=    Get Element Attribute    ${SWITCH_STATUS}    aria-checked
     Should Be Equal    ${estado}    false
 
-#Keywords do CT-002
+#Keywords do CA-006
 E Nenhum Campo Obrigatorio Foi Preenchido
     ${nome}=    Get Value    ${CAMPO_NOME}
     Should Be Empty    ${nome}
@@ -94,7 +94,7 @@ E O Campo "${campo}" Deve Exibir Mensagem De Obrigatoriedade
 
     Should Not Be Empty    ${mensagem}
 
-#Keywords do CT-003
+#Keywords do CA-006
 E Preencho O Campo "${campo}" Com Dado Valido
     IF    '${campo}' == 'Nome'
         Input Text    ${CAMPO_NOME}    ${NOME_FUNCIONARIO}
@@ -110,7 +110,7 @@ E Preencho O Campo "${campo}" Com Dado Valido
 
     END
 
-#Keywords do CT-004
+#Keywords do CA-010
 Quando Informo Um CPF Com 10 Digitos
     Input Text    ${CAMPO_CPF}    1234567890
 
@@ -124,9 +124,9 @@ Entao O Campo CPF Deve Informar Que O Valor Esta Incompleto
 
     Log    Mensagem apresentada pelo campo CPF: ${mensagem}
 
-    Capture Page Screenshot    CT-004_-_Informar_CPF_com_10_digitos.png
+    Capture Page Screenshot    CA-004_-_Informar_CPF_com_10_digitos.png
 
-#Keywords do CT-005
+#Keywords do CA-011
 Quando Informo Um CPF Com 11 Digitos
     ${CPF_FUNCIONARIO}=    Cpf
     Set Test Variable    ${CPF_FUNCIONARIO}
@@ -145,9 +145,9 @@ Entao O Campo Deve Aceitar O Valor Informado
 
     Should Be Empty    ${mensagem}
 
-    Capture Page Screenshot    CT-005_-_Informar_CPF_com_11_digitos.png
+    Capture Page Screenshot    CA-005_-_Informar_CPF_com_11_digitos.png
 
-#Keywords do CT-006
+#Keywords do CA-012
 Quando Informo Um CPF Com 12 Digitos
     Input Text    ${CAMPO_CPF}    123456789012
 
@@ -161,9 +161,26 @@ Entao O Campo CPF Deve Permitir Apenas 11 Digitos
     Should Be Equal As Integers    ${quantidade_digitos}    11
     ...    Ocorreu um erro: O campo CPF permitiu ${quantidade_digitos} dígitos, mas deveria permitir no máximo 11.
 
-    Capture Page Screenshot    CT-006_-_Informar_CPF_com_12_digitos.png
+    Capture Page Screenshot    CA-006_-_Informar_CPF_com_12_digitos.png
 
-#Keywords do CT-009
+#Keywords do CA-013
+Quando Informo A Data De Nascimento "${data}"
+    Input Text    ${CAMPO_DATA_NASCIMENTO}    ${data}
+
+E O Campo Data De Nascimento Deve Exibir Mensagem De Valor Invalido
+    ${elemento}=    Get WebElement    ${CAMPO_DATA_NASCIMENTO}
+
+    ${valor_invalido}=    Execute Javascript
+    ...    return arguments[0].validity.badInput;
+    ...    ARGUMENTS    ${elemento}
+    Should Be Equal    ${valor_invalido}    ${True}
+
+    ${mensagem}=    Execute Javascript
+    ...    return arguments[0].validationMessage;
+    ...    ARGUMENTS    ${elemento}
+    Should Not Be Empty    ${mensagem}
+
+#Keywords do CA-014
 Quando Seleciono O ${cargo}
     Wait Until Element Is Visible    ${CAMPO_CARGO}
     Click Element    ${CAMPO_CARGO}
@@ -199,7 +216,35 @@ E O ${cargo} Deve Constar no Registro na API
         END
     END
 
-#Keywords do CT-010
+#Keywords do CA-015
+E A Opcao Nao Usa EPI Esta Desmarcada
+    Checkbox Should Not Be Selected    ${CHECKBOX_NAO_USA_EPI}
+
+E Os Campos De EPI E CA Estao Disponiveis
+    Wait Until Element Is Visible    ${CAMPO_EPI}
+    Wait Until Element Is Visible    ${CAMPO_CA_NUMBER}
+    Element Should Be Enabled    ${CAMPO_CA_NUMBER}
+
+E Os Campos De EPI E CA Devem Ficar Indisponiveis
+    Wait Until Element Is Not Visible    ${CAMPO_EPI}
+    Wait Until Element Is Not Visible    ${CAMPO_CA_NUMBER}
+
+E Os Campos De EPI E CA Devem Voltar A Ficar Disponiveis
+    E Os Campos De EPI E CA Estao Disponiveis
+
+Quando Marco A Opcao Nao Usa EPI
+    Click Element    ${CHECKBOX_NAO_USA_EPI}
+
+Quando Desmarco A Opcao Nao Usa EPI
+    Click Element    ${CHECKBOX_NAO_USA_EPI}
+
+Entao A Opcao Nao Usa EPI Deve Estar Marcada
+    Checkbox Should Be Selected    ${CHECKBOX_NAO_USA_EPI}
+
+Entao A Opcao Nao Usa EPI Deve Estar Desmarcada
+    Checkbox Should Not Be Selected    ${CHECKBOX_NAO_USA_EPI}
+
+#Keywords do CA-016
 E Seleciono A Atividade "${atividade}"
     Quando Seleciono A Atividade "${atividade}"
 
@@ -210,8 +255,8 @@ E Informo O Numero Do CA "${ca}"
     Input Text    ${CAMPO_CA_NUMBER}    ${ca}
 
 Quando Informo Que O Trabalhador Nao Usa EPI
-    Click Element    ${CHECKBOX_NAO_USA_EPI}
-    Checkbox Should Be Selected    ${CHECKBOX_NAO_USA_EPI}
+    Quando Marco A Opcao Nao Usa EPI
+    E A Opcao Nao Usa EPI Esta Desmarcada
 
 E Clico Em "Salvar"
     Quando Clico Em "Salvar"
@@ -246,7 +291,7 @@ Entao Os Dados De EPI Nao Devem Constar No Registro Da API
         END
     END
 
-#Keywords do CT-011
+#Keywords do CA-011
 Quando Seleciono A Atividade "${atividade}"
     Wait Until Element Is Visible    ${CAMPO_ATIVIDADE}
     Click Element    ${CAMPO_ATIVIDADE}
@@ -282,7 +327,7 @@ E A Atividade "${atividade}" Deve Constar No Registro Na API
         END
     END
 
-#Keywords do CT-012
+#Keywords do CA-012
 Quando Seleciono O EPI "${epi}"
     Wait Until Element Is Visible    ${CAMPO_EPI}
     Click Element    ${CAMPO_EPI}
@@ -320,7 +365,7 @@ E O EPI "${epi}" Deve Constar No Registro Na API
         END
     END
 
-#Keywords do CT-014
+#Keywords do CA-014
 E Preencho Apenas Os Campos Obrigatorios Com Dados Validos
     [Arguments]    ${nome}=${NOME_FUNCIONARIO}
 
@@ -340,14 +385,34 @@ Entao O Cadastro Deve Ser Realizado Com Sucesso
     Wait Until Element Is Not Visible    ${CAMPO_NOME}
     Wait Until Element Is Visible        ${BTN_VER_APENAS_ATIVOS}
 
-#Keywords do CT-015
-Quando Anexo Um Arquivo Valido No Campo ASO
-    Choose File    ${CAMPO_ARQUIVO}    ${ARQUIVO_ASO}
+#Keywords do CA-018
+Quando Seleciono O Arquivo ASO "${arquivo}"
+    Choose File    ${CAMPO_ARQUIVO}    ${EXECDIR}/resources/files/${arquivo}
 
 E O Nome Do Arquivo Deve Ser Exibido
     Page Should Contain    girl-icon2.jpg
 
-#Keywords do CT-016
+#Keywords do CT-019
+E Seleciono O Arquivo ASO "${arquivo}"
+    Quando Seleciono O Arquivo ASO "${arquivo}"
+
+Quando Substituo O Arquivo ASO Por "${arquivo}"
+    Choose File    ${CAMPO_ARQUIVO}    ${EXECDIR}/resources/files/${arquivo}
+
+Entao Somente O Arquivo ASO "${arquivo}" Deve Estar Selecionado
+    ${elemento}=    Get WebElement    ${CAMPO_ARQUIVO}
+    ${quantidade}=    Execute Javascript
+    ...    return arguments[0].files.length;
+    ...    ARGUMENTS    ${elemento}
+    Should Be Equal As Integers    ${quantidade}    1
+
+    ${nome}=    Execute Javascript
+    ...    return arguments[0].files[0].name;
+    ...    ARGUMENTS    ${elemento}
+    Should Be Equal    ${nome}    ${arquivo}
+    Page Should Contain    ${arquivo}
+
+#Keywords do CA-020
 E Existem Funcionarios Ativos E Inativos Cadastrados
     ${total_ativos}    ${total_cadastros}=    Obter Quantidades Do Contador
 
@@ -371,7 +436,7 @@ E Funcionarios Inativos Nao Devem Ser Exibidos
     Should Be Equal As Integers    ${total_inativos_ocultos}    ${TOTAL_INATIVOS}
     ...    Ocorreu um erro: Foram ocultados ${total_inativos_ocultos} funcionários inativos, mas o total esperado era ${TOTAL_INATIVOS}.
 
-#Keywords do CT-017
+#Keywords do CA-021
 E O Filtro "${filtro}" Esta Selecionado
     ${total_ativos}    ${total_cadastros}=    Obter Quantidades Do Contador
 
@@ -417,22 +482,30 @@ Contador Deve Estar Carregado
     ${texto_contador}=    Get Text    ${CONTADOR_ATIVOS}
     Should Match Regexp    ${texto_contador}    Ativos\\s*\\d+\\s*/\\s*\\d+
 
-#Keywords do CT-018
-E A Etapa Esta Pendente
+#Keywords do CA-022
+E A Etapa Esta Marcada Como Nao
     ${estado}=    Get Element Attribute    ${SWITCH_ETAPA}    aria-checked
     Should Be Equal    ${estado}    false
 
-Quando Marco A Etapa Como Concluida
+Quando Marco A Etapa Como "${conclusao}"
     Click Element    ${SWITCH_ETAPA}
 
 Entao A Etapa Deve Ser Exibida Como Concluida
+    Wait Until Element Is Visible    ${STATUS_PRIMEIRO_ITEM}
+    
     ${estado}=    Get Element Attribute    ${SWITCH_ETAPA}    aria-checked
     Should Be Equal    ${estado}    true
 
-    Wait Until Element Is Visible    ${STATUS_PRIMEIRO_ITEM}
-
     ${texto}=    Get Text    ${STATUS_PRIMEIRO_ITEM}
     Should Be Equal    ${texto}    CONCLUIDO
+
+    Capture Page Screenshot    CA-021_-_Primeira_Etapa_Concluida.png
+
+Entao A Exibicao De Concluida Deve Desaparecer
+    Wait Until Element Is Not Visible    ${STATUS_PRIMEIRO_ITEM}
+    
+    ${estado}=    Get Element Attribute    ${SWITCH_ETAPA}    aria-checked
+    Should Be Equal    ${estado}    false
 
 #Registrar evidências no relatório
 Registrar Evidencia Final

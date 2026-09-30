@@ -18,7 +18,7 @@ Limpar Registro Criado Indevidamente
         ...    expected_status=any
     END
 
-#Keywords do CT-019
+#Keywords do CA-001
 Quando Consulto A Lista De Funcionarios
     ${response}=    GET    ${ENDPOINT_FUNCIONARIOS}
     ...    expected_status=any
@@ -39,7 +39,7 @@ E O Primeiro Registro Deve Seguir O Formato Esperado
         Dictionary Should Contain Key    ${employee}    ${campo}
     END
 
-#Keywords do CT-020
+#Keywords do CA-002
 E Tenho Um Funcionario Valido Para Teste
     ${cpf_formatado}=    Cpf
     ${cpf}=    Remove String    ${cpf_formatado}    .    -
@@ -141,7 +141,7 @@ Buscar Registro De Teste No GET
 
     RETURN    ${EMPTY}
 
-#Keywords do CT-021
+#Keywords do CA-003
 Quando Consulto Os Cabecalhos Dos Funcionarios
     ${response}=    HEAD
     ...    ${ENDPOINT_FUNCIONARIOS}
