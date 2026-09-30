@@ -11,28 +11,33 @@
 | BUG-005 | P1 | Web | Dados pessoais expostos em listagem acessível sem autenticação |
 | BUG-006 | P1 | API | API sem autenticação que permite acesso e manipulação dados pessoais |
 | BUG-007 | P2 | Web | Upload irrestrito de arquivos no Campo de anexar ASO |
-| BUG-008 | P2 | Web | Cadastro aceita CPF inválido de 11 dígitos |
-| BUG-009 | P2 | Web | Cadastro permite CPF já existente |
-| BUG-010 | P2 | Web | Campos obrigatórios aceitam apenas espaços em branco |
-| BUG-011 | P2 | Web | EPI selecionado é alterado para `Capacete de segurança` ao preencher o número do CA |
-| BUG-012 | P2 | API | Dados de EPI persistem na API após trabalhador informar que não usa EPI |
-| BUG-013 | P2 | API | `Cargo 01` selecionado não é persistido no campo `role` |
-| BUG-014 | P2 | API | `Ativid 01` selecionado não é persistido no campo `activity` |
-| BUG-015 | P2 | API | EPI `Capacete de segurança` selecionado não é persistido no campo `epi` |
-| BUG-016 | P2 | Web | Botão `Adicionar outra atividade` se comporta como botão "Salvar" |
-| BUG-017 | P2 | Web | Botão `Próximo passo` não avança para a etapa seguinte |
-| BUG-018 | P3 | Web | Função para adicionar outro EPI sem resposta |
-| BUG-019 | P3 | Web | Campo Data de Nascimento aceita data futura |
-| BUG-020 | P3 | Web | Listagem de funcionários não permite rolagem vertical adequada |
-| BUG-021 | P4 | Web | Página inicial exibe texto provisório `Lorem ipsum` |
-| BUG-022 | P4 | Web | Elementos da interface ficam sobrepostos em resoluções menores |
+| BUG-008 | P2 | Web | Campo CPF aceita letras |
+| BUG-009 | P2 | Web | Cadastro aceita CPF inválido de 11 dígitos |
+| BUG-010 | P2 | Web | Cadastro permite CPF já existente |
+| BUG-011 | P2 | Web | Campos obrigatórios aceitam apenas espaços em branco |
+| BUG-012 | P2 | Web | EPI selecionado é alterado para `Capacete de segurança` ao preencher o número do CA |
+| BUG-013 | P2 | API | Dados de EPI persistem na API após trabalhador informar que não usa EPI |
+| BUG-014 | P2 | API | `Cargo 01` selecionado não é persistido no campo `role` |
+| BUG-015 | P2 | API | `Ativid 01` selecionado não é persistido no campo `activity` |
+| BUG-016 | P2 | API | EPI `Capacete de segurança` selecionado não é persistido no campo `epi` |
+| BUG-017 | P2 | Web | Botão `Adicionar outra atividade` se comporta como botão "Salvar" |
+| BUG-018 | P2 | Web | Botão `Próximo passo` não avança para a etapa seguinte |
+| BUG-019 | P3 | Web | Função para adicionar outro EPI sem resposta |
+| BUG-020 | P3 | Web | Campo Data de Nascimento aceita data futura |
+| BUG-021 | P3 | Web | Listagem de funcionários não permite rolagem vertical adequada |
+| BUG-022 | P3 | Web | Campo ASO não permite remover o arquivo selecionado antes de salvar |
+| BUG-023 | P4 | Web | Página inicial exibe texto provisório `Lorem ipsum` |
+| BUG-024 | P4 | Web | Elementos da interface ficam sobrepostos em resoluções menores |
+| BUG-025 | P4 | Web | Todas as etapas são identificadas como `ITEM 1` |
 
 > **Critério de prioridade:** P1 = urgente/crítica - interrompe uma função essencial ou permite exposição, alteração ou exclusão não autorizada de dados pessoais; P2 = alta - afeta as funções principais, mas não impede completamente o uso ou perda da integridade do dado; P3 = moderada - impacta funções secundárias; P4 = leve - problemas de usabilidade ou inconsistências que não afetam a funcionalidade.
 
-## BUG-001 — Registro fora do padrão quebra a renderização da aplicação Web
+## Descrição dos defeitos
+#### BUG-001 — Registro fora do padrão quebra a renderização da aplicação Web
 
 **Prioridade:** P1  
-**Área:** Web + API / Resiliência
+**Área:** Web + API / Resiliência  
+**Cenário relacionado:** CT-035, CT-036, CT-03
 
 **Passos:**
 1. Acessar a página inicial e confirmar ela está renderizando normalmente.
@@ -64,10 +69,11 @@ https://github.com/user-attachments/assets/a0a65ac5-2412-4f69-ae80-e70858c3b400
 **Impacto:** 
 Um único registro inconsistente na API pode indisponibilizar a aplicação.
 
-## BUG-002 — API permite criar registro fora do schema esperado
+#### BUG-002 — API permite criar registro fora do schema esperado
 
 **Prioridade:** P1  
-**Área:** API / Integridade de dados
+**Área:** API / Integridade de dados  
+**Cenário relacionado:** CT-035
 
 **Endpoint:** `POST /employees`
 
@@ -90,10 +96,11 @@ O registro é criado e passa a constar no `GET /employees` fora do schema padrã
 **Impacto:** 
 A API permite criar dados estruturalmente inconsistentes, conforme relatado no BUG-001 esses registros causam indisponibilidade na interface.
 
-## BUG-003 — Método PUT permite substituir `employee` por estrutura fora do padrão esperado
+#### BUG-003 — Método PUT permite substituir `employee` por estrutura fora do padrão esperado
 
 **Prioridade:** P1  
-**Área:** API / Integridade de dados
+**Área:** API / Integridade de dados  
+**Cenário relacionado:** CT-038
 
 **Endpoint:** `PUT /employees/{id}`
 
@@ -123,10 +130,11 @@ https://github.com/user-attachments/assets/9a9552fe-e66e-47ac-bc1a-abe190b7fa6f
 **Impacto:**
 Permite sobrescrever um registro válido com uma estrutura incompatível com o padrão utilizado pela aplicação, causando perda de dados e conforme relatado no BUG-001 esses registros causam indisponibilidade na interface.
 
-## BUG-004 — Método PATCH apaga campos não enviados na atualização parcial
+#### BUG-004 — Método PATCH apaga campos não enviados na atualização parcial
 
 **Prioridade:** P1  
-**Área:** API / Integridade de dados
+**Área:** API / Integridade de dados  
+**Cenário relacionado:** CT-039
 
 **Endpoint:** `PATCH /employees/{id}`
 
@@ -160,10 +168,11 @@ https://github.com/user-attachments/assets/ad5e6e48-7ab2-4375-bd30-b7af0c663ac9
 **Impacto:**
 Uma atualização parcial pode apagar informações previamente cadastradas do funcionário, causando perda de dados e comprometendo a integridade do registro e conforme relatado no BUG-001 esses registros causam indisponibilidade na interface.
 
-## BUG-005 — Dados pessoais exposto em listagem acessível sem login
+#### BUG-005 — Dados pessoais exposto em listagem acessível sem login
 
 **Prioridade:** P1  
-**Área:** Web / Privacidade
+**Área:** Web / Privacidade  
+**Cenário relacionado:** Sem CT específico
 
 **Pré-condição:** Existir funcionários cadastrados com Nome e CPF completo.
 
@@ -183,10 +192,11 @@ Os cards exibem o Nome e o CPF na Página Inicial.
 **Impacto:** 
 Exposição indevida de dado pessoal (LGPD) em uma página acessível sem autenticação.
 
-## BUG-006 — API permite acesso e manipulação de dados pessoais sem autenticação
+#### BUG-006 — API permite acesso e manipulação de dados pessoais sem autenticação
 
 **Prioridade:** P1  
-**Área:** API / Segurança / Privacidade
+**Área:** API / Segurança / Privacidade  
+**Cenário relacionado:** CT-030 e CT-031
 
 **Passos:**
 1. Acessar diretamente o endpoint `/employees` sem realizar autenticação.
@@ -213,10 +223,11 @@ Foram observadas operações disponíveis sem autenticação, incluindo:
 **Impacto:**  
 Permite que usuários não autenticados tenham acesso a dados pessoais de funcionários e realizem alterações ou exclusões nos registros. O comportamento compromete a confidencialidade e a integridade das informações armazenadas e pode resultar em exposição, modificação ou perda não autorizada de dados.
 
-## BUG-007 — Upload irrestrito de arquivos no Campo de anexar ASO
+### BUG-007 — Upload irrestrito de arquivos no Campo de anexar ASO
 
 **Prioridade:** P2  
-**Área:** Web / Segurança / OWASP TOP 10
+**Área:** Web / Segurança / OWASP TOP 10  
+**Cenário relacionado:** Sem CT específico
 
 **Passos:**
 1. Acessar o formulário de cadastro de funcionário.
@@ -237,13 +248,38 @@ https://github.com/user-attachments/assets/2433c55e-6808-4dc1-bfd2-d0c2e86ea930
 
 
 **Impacto:**  
-A ausência de uma validação adequada de tipo de arquivo aumenta o risco de envio de conteúdo não previsto ou tipo perigoso. De acordo com o OWASP Top 10:2025 esse comportamento está relacionado à ***CWE-434 — Unrestricted Upload of File with Dangerous Type*** na categoria ***A06:2025 — Insecure Design***.
-Link para consulta: https://top10.owasp.org/2025/A06_2025-Insecure_Design/
+A ausência de uma validação adequada de tipo de arquivo aumenta o risco de envio de conteúdo não previsto ou tipo perigoso. De acordo com o OWASP Top 10:2025 esse comportamento está relacionado à ***CWE-434 — Unrestricted Upload of File with Dangerous Type*** na categoria [***A06:2025 — Insecure Design***](https://top10.owasp.org/2025/A06_2025-Insecure_Design/).
 
-## BUG-008 — Cadastrar CPF de 11 dígitos inválido
+### BUG-008 — Campo CPF aceita letras
 
 **Prioridade:** P2  
-**Área:** Web / Validação de dados
+**Área:** Web / Validação de dados  
+**Cenário relacionado:** CT-019  
+
+**Passos:**
+1. Acessar o formulário de cadastro de funcionário.
+2. Preencher o nome.
+3. Informar 11 letras, como `abcdefghijk` no campo CPF.
+4. Clicar em “Salvar”.
+5. Observar como a página responde.
+
+**Resultado esperado:**  
+O campo deve impedir a entrada de letras ou informar que o CPF contém caracteres inválidos. Um CPF composto por letras não deve ser considerado válido.
+
+**Resultado obtido:**  
+O campo mantém as 11 letras e não apresenta mensagem de validação para o CPF. Ao clicar em “Salvar”, a validação aponta o próximo campo obrigatório, sem apontar erro no CPF.
+
+**Evidência:**  
+
+
+**Impacto:**  
+CPF é um dado único composto apenas por números e a interface não identifica o formato inválido, criando risco de cadastro de dados inconsistentes.
+
+### BUG-009 — Cadastrar CPF de 11 dígitos inválido
+
+**Prioridade:** P2  
+**Área:** Web / Validação de dados  
+**Cenário relacionado:** Sem CT específico
 
 **Passos:**
 1. Acessar o formulário de cadastro de funcionário.
@@ -264,10 +300,11 @@ https://github.com/user-attachments/assets/138aaa95-05a6-431d-9175-d2d9797c9044
 
 **Impacto:** Permite o armazenamento de um CPF inválido, comprometendo a integridade e a confiabilidade dos dados cadastrais.
 
-## BUG-009 — Duplicar CPF já existente em novo cadastro
+### BUG-010 — Duplicar CPF já existente em novo cadastro
 
 **Prioridade:** P2  
-**Área:** Web / Validação de dados
+**Área:** Web / Validação de dados  
+**Cenário relacionado:** CT-007
 
 **Passos:**
 1. Garantir que exista um funcionário cadastrado com determinado CPF.
@@ -289,10 +326,11 @@ https://github.com/user-attachments/assets/a10a4c9b-28b8-4739-9c23-a26f1d980a63
 
 **Impacto:** CPF é um dado único. Permitir registros duplicados para o mesmo CPF  compromete a unicidade, rastreabilidade e confiabilidade dos dados cadastrais.
 
-## BUG-010 — Cadastrar campos obrigatórios apenas com espaços
+### BUG-011 — Cadastrar campos obrigatórios apenas com espaços
 
 **Prioridade:** P2  
-**Área:** Web / Validação de dados
+**Área:** Web / Validação de dados  
+**Cenário relacionado:** CT-006
 
 **Passos:**
 1. Acessar o formulário de cadastro de funcionário.
@@ -315,10 +353,11 @@ https://github.com/user-attachments/assets/0bba7d3c-d035-4843-b6e1-39cc4d13d94d
 
 **Impacto:**  Permite o armazenamento de dados obrigatórios sem informação real, comprometendo a qualidade e a consistência dos registros cadastrados.
 
-## BUG-011 — EPI selecionado é alterado para `Capacete de segurança` ao preencher o número do CA
+### BUG-012 — EPI selecionado é alterado para `Capacete de segurança` ao preencher o número do CA
 
 **Prioridade:** P2  
-**Área:** Web / Formulário / Integridade de dados
+**Área:** Web / Formulário / Integridade de dados  
+**Cenário relacionado:** CT-014
 
 **Passos:**
 1. Acessar o formulário de cadastro de funcionário.
@@ -340,10 +379,11 @@ https://github.com/user-attachments/assets/bc5c1d57-aa6f-4399-9796-12475441d430
 **Impacto:**  
 Pode provocar o cadastro de um EPI diferente daquele informado pelo usuário, comprometendo a consistência e a confiabilidade dos dados de segurança do trabalhador.
 
-## BUG-012 — Dados de EPI persistem na API após trabalhador informar que não usa EPI
+### BUG-013 — Dados de EPI persistem na API após trabalhador informar que não usa EPI
 
 **Prioridade:** P2  
-**Área:** Web + API / Integridade de dados / Regra de negócio
+**Área:** Web + API / Integridade de dados / Regra de negócio  
+**Cenário relacionado:** CT-012
 
 **Passos:**
 1. Acessar o formulário de cadastro de funcionário.
@@ -368,10 +408,11 @@ https://github.com/user-attachments/assets/a539711e-a1d7-462b-a744-7e85107da776
 **Impacto:**  
 O sistema mantém informações incompatíveis com a opção selecionada pelo usuário, gerando inconsistência entre a interface e os dados persistidos. Isso pode comprometer a confiabilidade das informações de segurança do trabalhador e afetar regras de negócio que dependam do indicador de uso de EPI.
 
-## BUG-013 — `Cargo 01` não é persistido no campo `role`
+### BUG-014 — `Cargo 01` não é persistido no campo `role`
 
 **Prioridade:** P2  
-**Área:** Web + API / Persistência
+**Área:** Web + API / Persistência  
+**Cenário relacionado:** CT-011
 
 **Passos:**
 1. Acessar o formulário de cadastro de funcionário.
@@ -393,10 +434,11 @@ https://github.com/user-attachments/assets/39dc940f-9c64-4e09-869d-1d8dce760d30
 
 **Impacto:** Informação selecionada na interface não é persistida corretamente no backend.
 
-## BUG-014 — `Ativid 01` selecionada não é persistida no campo `activity`
+### BUG-015 — `Ativid 01` selecionada não é persistida no campo `activity`
 
 **Prioridade:** P2  
-**Área:** API / Integridade de dados
+**Área:** API / Integridade de dados  
+**Cenário relacionado:** CT-013
 
 **Passos:**
 1. Acessar o formulário de cadastro de funcionário.
@@ -419,10 +461,11 @@ https://github.com/user-attachments/assets/fce2ea71-02f2-4617-a4b0-002692118da5
 **Impacto:**  
 O sistema perde uma informação relevante informada pelo usuário após um cadastro aparentemente concluído com sucesso, comprometendo a integridade e a completude dos dados do funcionário.
 
-## BUG-015 — EPI `Capacete de segurança` não é persistido
+### BUG-016 — EPI `Capacete de segurança` não é persistido
 
 **Prioridade:** P2  
-**Área:** Web + API / Persistência
+**Área:** Web + API / Persistência  
+**Cenário relacionado:** CT-014
 
 **Passos:**
 1. Acessar o formulário de cadastro de funcionário.
@@ -444,10 +487,11 @@ https://github.com/user-attachments/assets/845f79ec-7ca8-4b63-a2c3-e3978de79d4a
 
 **Impacto:** Perda do EPI selecionado durante a persistência.
 
-## BUG-016 — Botão `Próximo passo` não avança para a próxima etapa
+### BUG-017 — Botão `Próximo passo` não avança para a próxima etapa
 
 **Prioridade:** P2  
-**Área:** Web / Navegação
+**Área:** Web / Navegação  
+**Cenário relacionado:** Sem CT específico
 
 **Passos:**
 1. Acessar a página inicial.
@@ -467,10 +511,11 @@ https://github.com/user-attachments/assets/7665cf7c-e5d7-49f6-8790-f51e28c513ad
 
 **Impacto:** Bloqueia ou prejudica a continuidade do fluxo principal.
 
-## BUG-017 — Botão `Adicionar outra atividade` se comporta como botão `Salvar`
+### BUG-018 — Botão `Adicionar outra atividade` se comporta como botão `Salvar`
 
 **Prioridade:** P2  
-**Área:** Web / Funcionalidade
+**Área:** Web / Funcionalidade  
+**Cenário relacionado:** CT-029
 
 **Passos:**
 1. Acessar o formulário de cadastro de funcionário.
@@ -492,10 +537,11 @@ https://github.com/user-attachments/assets/db789009-d179-4253-8b34-90913f1535c1
 **Impacto:**  
 Impede o cadastro de múltiplas atividades para o mesmo funcionário, comprometendo a completude das informações registradas.
 
-## BUG-018 — Função para adicionar outro EPI sem resposta
+### BUG-019 — Função para adicionar outro EPI sem resposta
 
 **Prioridade:** P3  
-**Área:** Web / Funcionalidade
+**Área:** Web / Funcionalidade  
+**Cenário relacionado:** Sem CT específico
 
 **Passos:**
 1. Acessar o formulário de cadastro de funcionário.
@@ -516,10 +562,11 @@ https://github.com/user-attachments/assets/23d9c299-889a-4028-8d62-b137d2727fd8
 **Impacto:** 
 Impede o cadastro de mais de um EPI para a mesma atividade, limitando o registro correto dos equipamentos utilizados pelo trabalhador.
 
-## BUG-019 — Campo de data de nascimento aceita data futura
+### BUG-020 — Campo de data de nascimento aceita data futura
 
 **Prioridade:** P3  
-**Área:** Web / Validação de dados
+**Área:** Web / Validação de dados  
+**Cenário relacionado:** CT-010
 
 **Passos:**
 1. Acessar o formulário de cadastro de funcionário.
@@ -537,10 +584,11 @@ O campo aceita uma data futura sem apresentar validação ou impedir o preenchim
 **Impacto:**  
 Permite o cadastro de uma informação inválida, comprometendo a consistência dos dados do funcionário.
 
-## BUG-0020 — Listagem com muitos funcionários não permite rolagem vertical adequada
+### BUG-0021 — Listagem com muitos funcionários não permite rolagem vertical adequada
 
 **Prioridade:** P3  
-**Área:** Web / Usabilidade
+**Área:** Web / Usabilidade  
+**Cenário relacionado:** CT-015
 
 **Pré-condição:** Existirem vários cards de funcionários.
 
@@ -563,10 +611,36 @@ https://github.com/user-attachments/assets/32f3e48d-ae14-4eaa-bcb4-68aac37425af
 **Impacto:** 
 Registros inacessíveis em condições normais de uso.
 
-## BUG-021 — Página inicial exibe texto provisório `Lorem ipsum`
+### BUG-022 — Campo ASO não permite remover o arquivo selecionado antes de salvar
+
+**Prioridade:** P3  
+**Área:** Web / Upload / Usabilidade  
+**Cenário relacionado:** CT-027 
+
+**Pré-condição:** Estar no formulário de cadastro de funcionário.
+
+**Passos:**
+1. Selecionar um arquivo válido no campo ASO.
+2. Confirmar que o nome do arquivo aparece no formulário.
+3. Tentar remover o anexo antes de salvar, sem selecionar outro arquivo.
+
+**Resultado esperado:**  
+Como o ASO é opcional, deve ser possível remover o arquivo selecionado e voltar ao estado sem anexo antes de salvar.
+
+**Resultado obtido:**  
+O formulário apresenta o nome do arquivo e a opção “Selecione o arquivo”, mas não oferece uma ação para remover o anexo e deixar o campo vazio.
+
+**Evidência:**  
+
+
+**Impacto:**  
+O usuário não consegue corrigir uma seleção acidental para concluir o cadastro sem anexo.
+
+### BUG-023 — Página inicial exibe texto provisório `Lorem ipsum`
 
 **Prioridade:** P4  
-**Área:** Web / Conteúdo e apresentação
+**Área:** Web / Conteúdo e apresentação   
+**Cenário relacionado:** Sem CT específico
 
 **Passos:**
 1. Acessar a página inicial.
@@ -579,15 +653,16 @@ A página inicial deve exibir conteúdo definitivo e apropriado ao contexto da a
 O texto de apresentação contém conteúdo provisório com `Lorem ipsum`.
 
 **Evidência:**  
-![BUG-021](<../resources/files/bugs/bug021-loremIpsum.png>)
+![BUG-023](<../resources/files/bugs/bug021-loremIpsum.png>)
 
 **Impacto**: 
 Reduz a qualidade percebida da interface e não agrega conteúdo ao usuário.
 
-## BUG-022 — Elementos da interface ficam sobrepostos em resoluções menores
+### BUG-024 — Elementos da interface ficam sobrepostos em resoluções menores
 
 **Prioridade:** P4  
-**Área:** Web / Responsividade / Usabilidade
+**Área:** Web / Responsividade / Usabilidade   
+**Cenário relacionado:** Sem CT específico
 
 **Passos:**
 1. Acessar a aplicação Web.
@@ -601,10 +676,40 @@ Os componentes da página devem se adaptar ao espaço disponível, mantendo o co
 Ao reduzir o tamanho da janela, alguns elementos não se reorganizam corretamente e passam a ficar sobrepostos.
 
 **Evidência:**  
-![BUG-022](<../resources/files/bugs/bug022-sobrepostos.png>)
+![BUG-024](<../resources/files/bugs/bug022-sobrepostos.png>)
 
 **Impacto:**  
 Prejudica a legibilidade e a utilização da aplicação em telas menores ou janelas redimensionadas, reduzindo a qualidade da experiência do usuário.
+
+## BUG-025 — Todas as etapas são identificadas como `ITEM 1`
+
+**Prioridade:** P4  
+**Área:** Web / Conteúdo e navegação  
+**Cenário relacionado:** Sem CT específico.
+
+**Passos:**
+1. Acessar a página inicial.
+2. Observar os indicadores de etapas exibidos no topo da página.
+3. Comparar os nomes apresentados em cada posição.
+
+**Resultado esperado:**  
+Cada etapa deve ter uma identificação distinta e coerente com sua posição, permitindo ao usuário reconhecer a etapa atual e as seguintes.
+
+**Resultado obtido:**  
+Todos os indicadores apresentam o mesmo nome, `ITEM 1`, mesmo ocupando posições diferentes.
+
+**Evidência:**  
+![BUG-025](<../resources/files/bugs/bug025-item1.png>)
+
+**Impacto:**  
+A repetição dos nomes dificulta entender a sequência e acompanhar o progresso das etapas.
+
+## Observações
+
+- O 3 pontinhos ao lado do card Ativos/Inativos não tem função, mas não há um embasamento suficiente para afirmar que devia funcionar.
+- 'usesEpi = true' quando funcionário informa que não usa EPI parece confusa, mas cai no mesmo problema da falta de documentação.
+- Diferenças de representação entre interface e API, como `Óculos de proteção` → `oculor-de-proteçao`, não foram tratadas como defeito porque havia persistência consistente.
+- Palavras escrita de forma abreviada como `Ativid` ao invés de `Atividade` não foram consideradas como erro.
 
 ## Sugestões de melhoria
 
@@ -614,16 +719,13 @@ Prejudica a legibilidade e a utilização da aplicação em telas menores ou jan
 - Inserir tratativas de erro e seus respectivos status Code.
 - Garantir que os métodos `PUT` e `PATCH` respeitem corretamente o comportamento esperado de atualização completa e parcial.
 - Aplicar validações de negócio também no backend, como campos obrigatórios, não apenas na interface Web.
+- Garantir que inputs não aceitem textos muito longos e tags, porque, segundo [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html), são vulnerabilidades para ataques do tipo Cross-Site Scripting (XSS).
 - Criar validações de unicidade e consistência para CPF.
 - Garantir a persistência correta de todas as opções dos campos Cargo, Atividade e EPI.
 - Tratar registros inválidos de forma resiliente na interface, evitando que um único dado inconsistente impeça a renderização da aplicação.
 - Restringir os tipos de arquivos permitidos no upload de ASO e aplicar validação também no servidor.
 - Revisar a responsividade e a rolagem da listagem em diferentes tamanhos de tela.
 - Implementar data de admissão e data de demissão para histórico de registro.
+- Escolher uma sequência de id mais longa, porque apesar do id de 4 dígitos alfanumérico ter uma quantidade de possibilidades na casa do milhão, ao atingir ~1500 registros existe 50% de chance de repetir um id já utilizado, segundo o [paradoxo do aniversário](https://www.linkedin.com/pulse/o-paradoxo-do-aniversário-e-segurança-das-chaves-de-amorim-diinf/).
 
-## Observações
 
-- O relatório inclui apenas comportamentos observados durante a exploração e/ou automação.
-- Cenários sem evidência conclusiva não foram classificados como defeitos.
-- Diferenças de representação entre interface e API, como `Óculos de proteção` → `oculor-de-proteçao`, não foram tratadas como defeito porque havia persistência consistente.
-- Palavras escrita de forma abreviada como `Ativid` ao invés de `Atividade` não foram consideradas como erro.
