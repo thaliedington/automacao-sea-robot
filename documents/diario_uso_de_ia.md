@@ -2,11 +2,12 @@
 IAs utilizada: chatGPT (GPT 5.6 Sol), Copilot no VS Code e modo IA do Google.
 
 ## Utilizações
-- Revisar BDD no Plano de Testes.
+- Revisar escrita dos cenários levantados.
+- Escrever descrição dos BUGs a partir do contexto, cenários de testes informados e modelo que eu criei.
 - Entender erro no console após criar um registro fora do padrão e checar que a página Inicial ficou branca.
-- Discutir argumentos para embasar a classificação dos bugs na prioridade P1. Eu classifiquei, mas queria mais informações sobre impactos.
-- Modo IA do Google: ao pesquisar no Google a IA retornava informações condensadas de várias páginas.
+- Checar informações sobre impactos dos bugs classificados nas prioridades P1 a P3.
 - Diminuir o tamanho dos vídeos gravados, reduzindo o total de 84MB para 10MB.
+- Modo IA do Google: ao pesquisar no Google a IA retornava informações condensadas de várias páginas.
 
 ### Utilizações na automação 
 - Entender os erros após os cenários falharem.
@@ -15,8 +16,8 @@ IAs utilizada: chatGPT (GPT 5.6 Sol), Copilot no VS Code e modo IA do Google.
 - Copilot: autocomplete ao duplicar keywords muito parecidas ou trocar nomes de variáveis.
 
 ## O que a IA sugeriu errado
-Sobre o BUG-005 - Upload irrestrito de arquivos no Campo de anexar ASO:
-- O chatGPT (GPT 5.6 Sol) sugeriu que fazer upload arquivos sem validação adequada não era um bug, porque a regra de aceitação deve ser definida pela empresa. Eu discordei e fui procurar o OWASP Top 10 e achei a vulnerabilidade dentro da posição 6 - Design Inseguro.
+Sobre o BUG-007 - Upload irrestrito de arquivos no Campo de anexar ASO:
+- O chatGPT (GPT 5.6 Sol) sugeriu que fazer upload arquivos sem validação adequada não era um bug, porque a regra de aceitação deve ser definida pela empresa, mas segundo o OWASP Top 10 ele se encaixa como vulnerabilidade dentro da posição 6 - Design Inseguro.
 
-Sobre o cenário CT-009 - Validar Persistencia Das Opcoes Do Campo Cargo (automação):
+Sobre o cenário CT-014 - Validar Persistencia Das Opcoes Do Campo Cargo (automação):
 - Esse cenário cadastra na interface e depois checa a persistência no GET. No log apareceu o erro após executar a automação: "No keyword with name 'GET' found.". O chatGPT afirmou que era problema de compatibilidade entre a versão do Python e do Robot Framework. Ficamos um bom tempo instalando e desinstalando, até eu pesquisar no Google e perceber tinha esquecido de declarar a RequestsLibrary.

@@ -1,7 +1,7 @@
 # Notas de Estratégia
 
 ## Contexto
-Aplicação para cadastro de trabalhadores voltada ao contexto de segurança do trabalho, composta por:
+Essa documento será utilizada para aplicação dos testes exploratórios e início do entendimento da o sistema para cadastro de trabalhadores voltada ao contexto de segurança do trabalho, composta por:
 
 - interface Web para cadastro e listagem de funcionários;
 - API REST no endpoint `/employees`.

@@ -10,7 +10,7 @@
 | BUG-004 | P1 | API | Método PATCH remove campos não enviados em atualização parcial |
 | BUG-005 | P1 | Web | Dados pessoais expostos em listagem acessível sem autenticação |
 | BUG-006 | P1 | API | API sem autenticação que permite acesso e manipulação dados pessoais |
-| BUG-007 | P2 | Web | Upload irrestrito de arquivos no Campo de anexar ASO |
+| BUG-007 | P2 | Web | Upload irrestrito de arquivos no campo de anexar ASO |
 | BUG-008 | P2 | Web | Campo CPF aceita letras |
 | BUG-009 | P2 | Web | Cadastro aceita CPF inválido de 11 dígitos |
 | BUG-010 | P2 | Web | Cadastro permite CPF já existente |
@@ -37,7 +37,7 @@
 
 **Prioridade:** P1  
 **Área:** Web + API / Resiliência  
-**Cenário relacionado:** CT-035, CT-036, CT-03
+**Cenário relacionado:** CT-035, CT-036, CT-003
 
 **Passos:**
 1. Acessar a página inicial e confirmar ela está renderizando normalmente.
@@ -223,7 +223,7 @@ Foram observadas operações disponíveis sem autenticação, incluindo:
 **Impacto:**  
 Permite que usuários não autenticados tenham acesso a dados pessoais de funcionários e realizem alterações ou exclusões nos registros. O comportamento compromete a confidencialidade e a integridade das informações armazenadas e pode resultar em exposição, modificação ou perda não autorizada de dados.
 
-### BUG-007 — Upload irrestrito de arquivos no Campo de anexar ASO
+### BUG-007 — Upload irrestrito de arquivos no campo de anexar ASO
 
 **Prioridade:** P2  
 **Área:** Web / Segurança / OWASP TOP 10  
@@ -237,10 +237,10 @@ Permite que usuários não autenticados tenham acesso a dados pessoais de funcio
 5. Salvar o registro.
 
 **Resultado esperado:**  
-O sistema deve aceitar somente formatos de arquivo permitidos para o envio de um ASO e rejeitar arquivos sem extensão ou com extensões potencialmente executáveis.
+O sistema deve aceitar somente formatos de arquivo definidos para o envio de um ASO e rejeitar arquivos com extensões potencialmente executáveis.
 
 **Resultado obtido:**  
-O campo de upload aceita arquivos sem extensão e arquivos com tipo perigoso, sem apresentar mensagem de validação.
+O campo de upload aceita arquivos arquivos com tipo perigoso, sem apresentar mensagem de validação.
 
 **Evidência:**  
 
@@ -422,10 +422,10 @@ O sistema mantém informações incompatíveis com a opção selecionada pelo us
 5. Localizar o mesmo funcionário no `GET /employees` pelo CPF.
 
 **Resultado esperado:**
-O valor selecionado no campo Cargo deve ser persistido corretamente no campo `cargo` do registro retornado pela API.
+O valor selecionado no campo Cargo deve ser persistido corretamente no campo `role` do registro retornado pela API.
 
 **Resultado obtido:**
-O cadastro é concluído na interface, porém o valor `Cargo 01` não é persistido corretamente no campo `cargo`.
+O cadastro é concluído na interface, porém o valor `Cargo 01` não é persistido corretamente no campo `role`.
 
 **Evidência:** 
 
@@ -707,9 +707,10 @@ A repetição dos nomes dificulta entender a sequência e acompanhar o progresso
 ## Observações
 
 - O 3 pontinhos ao lado do card Ativos/Inativos não tem função, mas não há um embasamento suficiente para afirmar que devia funcionar.
-- 'usesEpi = true' quando funcionário informa que não usa EPI parece confusa, mas cai no mesmo problema da falta de documentação.
+- 'usesEpi = true' quando funcionário informa que não usa EPI parece confuso, mas cai no mesmo problema da falta de documentação.
 - Diferenças de representação entre interface e API, como `Óculos de proteção` → `oculor-de-proteçao`, não foram tratadas como defeito porque havia persistência consistente.
 - Palavras escrita de forma abreviada como `Ativid` ao invés de `Atividade` não foram consideradas como erro.
+- Não tratativas dos inputs do tipo texto, exceto CPF, não foram considerados erros por não saber como as regras foram definidas.
 
 ## Sugestões de melhoria
 
@@ -719,13 +720,9 @@ A repetição dos nomes dificulta entender a sequência e acompanhar o progresso
 - Inserir tratativas de erro e seus respectivos status Code.
 - Garantir que os métodos `PUT` e `PATCH` respeitem corretamente o comportamento esperado de atualização completa e parcial.
 - Aplicar validações de negócio também no backend, como campos obrigatórios, não apenas na interface Web.
-- Garantir que inputs não aceitem textos muito longos e tags, porque, segundo [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html), são vulnerabilidades para ataques do tipo Cross-Site Scripting (XSS).
+- Garantir que inputs não aceitem textos muito longos e tags, porque, segundo o [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html), são vulnerabilidades para ataques do tipo Cross-Site Scripting (XSS).
 - Criar validações de unicidade e consistência para CPF.
 - Garantir a persistência correta de todas as opções dos campos Cargo, Atividade e EPI.
 - Tratar registros inválidos de forma resiliente na interface, evitando que um único dado inconsistente impeça a renderização da aplicação.
-- Restringir os tipos de arquivos permitidos no upload de ASO e aplicar validação também no servidor.
-- Revisar a responsividade e a rolagem da listagem em diferentes tamanhos de tela.
 - Implementar data de admissão e data de demissão para histórico de registro.
-- Escolher uma sequência de id mais longa, porque apesar do id de 4 dígitos alfanumérico ter uma quantidade de possibilidades na casa do milhão, ao atingir ~1500 registros existe 50% de chance de repetir um id já utilizado, segundo o [paradoxo do aniversário](https://www.linkedin.com/pulse/o-paradoxo-do-aniversário-e-segurança-das-chaves-de-amorim-diinf/).
-
-
+- Escolher uma sequência de id mais longa, porque apesar do id de 4 dígitos alfanuméricos ter uma quantidade de possibilidades na casa do milhão, ao atingir ~1500 registros existe 50% de chance de repetir um id já utilizado, segundo o [paradoxo do aniversário](https://www.linkedin.com/pulse/o-paradoxo-do-aniversário-e-segurança-das-chaves-de-amorim-diinf/).

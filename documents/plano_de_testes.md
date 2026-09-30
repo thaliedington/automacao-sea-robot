@@ -37,11 +37,11 @@ Os cenários para aplicação Web são focados na experiência do usuário.
 
 #### [CT-001] Validar Botão Ativo/Inativo
 Dado que estou no formulário de cadastro de funcionário  
-E o status inicial está Inativo
-Quando altero o status para "Ativo"
-Entao o estar deve estar Ativo
-Quando altero o status para "Inativo"
-Entao o status deve estar Inativo
+E o status inicial está Inativo  
+Quando altero o status para "Ativo"  
+Entao o estar deve estar Ativo  
+Quando altero o status para "Inativo"  
+Entao o status deve estar Inativo  
 
 #### [CT-002] Tentar cadastrar funcionário sem preencher campos obrigatórios
 Dado que estou no formulário de cadastro de funcionário  
@@ -130,14 +130,15 @@ Então o campo os campos desabilitados não deve constar no GET /employees
 Dado que estou no formulário de cadastro de funcionário  
 E preencho todos os campos obrigatórios com dados válidos  
 E seleciono umas das opção do campo Atividade  
-Quando concluo o cadastroE o cadastro foi ser realizado com sucesso  
+Quando concluo o cadastro  
+E o cadastro foi ser realizado com sucesso  
 Então a mesmo atividade deve persistir ao consultar no GET /employees  
 E o campo 'activity' deve retornar o valor correspondente a atividade  
 
 #### [CT-014] Validar persistência dos EPIs
 Dado que estou no formulário de cadastro de funcionário  
 E preencho todos os campos obrigatórios com dados válidos  
-E seleciono umas das opção do campo EPIs 
+E seleciono umas das opção do campo EPIs  
 Quando concluo o cadastro  
 E o cadastro foi ser realizado com sucesso  
 Então o mesmo EPI deve persistir ao consultar no GET /employees  
@@ -200,7 +201,7 @@ Então esses controles devem ficar indisponíveis ou ocultos
 Quando desmarco a opção novamente  
 Então os controles devem voltar a ficar disponíveis  
 
-### [CT-023] Anexar Atestado de Saude Ocupacional Valido
+#### [CT-023] Anexar Atestado de Saude Ocupacional Valido
 Dado que estou no formulário de cadastro
 E preencho os demais campos obrigatórios com dados válidos 
 Quando anexo um arquivo válido
@@ -235,72 +236,72 @@ E o arquivo removido não deve ser enviado ao salvar
 
 #### [CT-028] Marcar a primeira etapa como concluída
 Dado que estou no formulário de cadastro de funcionário  
-E o etapa está marcada como Não
-Quando altero a conclusão para "Sim"
-Entao a etapa deve ser exibida como concluída
-Quando altero o status para "Não"
-Entao a exibição de concluída deve desaparecer
+E o etapa está marcada como Não  
+Quando altero a conclusão para "Sim"  
+Entao a etapa deve ser exibida como concluída  
+Quando altero o status para "Não"  
+Entao a exibição de concluída deve desaparecer  
 
 ### 5.2. CTs para a API
 Os cenários verificam respostas HTTP, estrutura e persistência dos dados no endpoint /employees. Para operações que alteram dados, utilizar registros criados especificamente para o teste e identificados pelo id.
 
-#### [CT-030] Impedir consulta de dados pessoais sem autenticação
+#### [CT-029] Impedir consulta de dados pessoais sem autenticação
 Dado que não forneci credenciais de autenticação  
 Quando envio GET /employees  
 Então a API deve negar o acesso aos dados pessoais  
 E não deve retornar a lista de funcionários  
 
-#### [CT-031] Impedir alterações sem autenticação
+#### [CT-030] Impedir alterações sem autenticação
 Dado que não forneci credenciais de autenticação  
 E disponho de um registro criado para teste  
 Quando tento executar POST /employees, PUT /employees/{id}, PATCH /employees/{id} e DELETE /employees/{id}  
 Então cada operação deve ser negada  
 E uma consulta posterior deve confirmar que nenhuma criação, alteração ou exclusão foi realizada  
 
-#### [CT-032] Consultar a lista de funcionários por GET
+#### [CT-031] Consultar a lista de funcionários por GET
 Dado que tenho acesso ao endpoint /employees  
 Quando envio GET /employees  
 Então a resposta deve ter status 200  
 E o corpo deve ser uma lista JSON  
 E os registros válidos usados na verificação devem conter a estrutura state.employee  
 
-#### [CT-033] Consultar os cabeçalhos por HEAD
+#### [CT-032] Consultar os cabeçalhos por HEAD
 Dado que tenho acesso ao endpoint /employees  
 Quando envio HEAD /employees  
 Então a resposta deve ter status 200  
 E não deve conter corpo  
 
-#### [CT-034] Criar funcionário com payload válido POST
+#### [CT-033] Criar funcionário com payload válido POST
 Dado que tenho um funcionário de teste com payload válido na estrutura state.employee  
 Quando envio POST /employees com esse payload  
 Então a resposta deve ter status 201 e retornar um id  
 E o registro consultado por GET deve conter os dados enviados  
 
-#### [CT-035] Rejeitar POST sem corpo
+#### [CT-034] Rejeitar POST sem corpo
 Dado que tenho acesso ao endpoint /employees  
 Quando envio POST /employees sem corpo de requisição  
 Então a API deve retornar um erro de validação  
 E não deve criar um registro sem state.employee  
 
-#### [CT-036] Rejeitar POST com estrutura inválida
+#### [CT-035] Rejeitar POST com estrutura inválida
 Dado que tenho um payload fora da estrutura esperada  
 Quando envio POST /employees com esse payload  
 Então a API deve retornar um erro de validação  
 E o payload não deve aparecer como novo registro no GET /employees  
 
-#### [CT-037] Substituir funcionário por PUT válido
+#### [CT-036] Substituir funcionário por PUT válido
 Dado que criei um funcionário de teste e guardei seu id  
 Quando envio PUT /employees/{id} com um payload completo e válido contendo um nome atualizado  
 Então a resposta deve indicar sucesso  
 E o GET deve retornar o novo nome e os demais dados enviados no payload  
 
-#### [CT-038] Rejeitar PUT com estrutura inválida
+#### [CT-037] Rejeitar PUT com estrutura inválida
 Dado que criei um funcionário válido e guardei seus dados originais  
 Quando envio PUT /employees/{id} sem a estrutura state.employee  
 Então a API deve retornar um erro de validação  
 E o GET deve mostrar que o registro original foi preservado  
 
-#### [CT-039] Preservar os demais campos no PATCH
+#### [CT-038] Preservar os demais campos no PATCH
 Dado que criei um funcionário com todos os campos necessários  
 E guardei os valores retornados pelo GET  
 Quando envio PATCH /employees/{id} alterando somente state.employee.name  
@@ -308,7 +309,7 @@ Então a resposta deve indicar sucesso
 E o GET deve retornar o novo nome  
 E os demais campos do funcionário devem manter os valores anteriores  
 
-#### [CT-040] Excluir funcionário por DELETE
+#### [CT-039] Excluir funcionário por DELETE
 Dado que criei um funcionário de teste e guardei seu id  
 Quando envio DELETE /employees/{id}  
 Então a resposta deve indicar sucesso  
