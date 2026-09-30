@@ -271,6 +271,11 @@ O campo mantém as 11 letras e não apresenta mensagem de validação para o CPF
 
 **Evidência:**  
 
+https://github.com/user-attachments/assets/06b17a6a-ec9a-42ce-adbf-a0b976556f61
+
+
+https://github.com/user-attachments/assets/aae5867f-bd5f-425e-9597-ac5892aa435e
+
 
 **Impacto:**  
 CPF é um dado único composto apenas por números e a interface não identifica o formato inválido, criando risco de cadastro de dados inconsistentes.
@@ -632,6 +637,7 @@ O formulário apresenta o nome do arquivo e a opção “Selecione o arquivo”,
 
 **Evidência:**  
 
+https://github.com/user-attachments/assets/46ade099-3ad6-4193-bedc-2ac40ba2488e
 
 **Impacto:**  
 O usuário não consegue corrigir uma seleção acidental para concluir o cadastro sem anexo.
