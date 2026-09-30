@@ -4,7 +4,8 @@ Projeto desenvolvido para um desafio técnico de **Analista de Testes Pleno (QA)
 
 Veja abaixo como ele funciona:
 
-https://github.com/user-attachments/assets/2e0071f3-037b-4b62-96f1-52b63f78be7d
+https://github.com/user-attachments/assets/6c5e22e9-20a7-4e2a-9b0f-907083c490bf
+
 
 ## Tecnologias utilizadas
 
